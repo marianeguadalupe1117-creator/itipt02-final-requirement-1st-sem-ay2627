@@ -1,0 +1,7 @@
+{
+  "name": "RecipeApplicationPrepMaster",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular-standalone"
+}

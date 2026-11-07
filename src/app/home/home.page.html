@@ -1,21 +1,110 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title> Blank </ion-title>
-  </ion-toolbar>
-</ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content [fullscreen]="true" class="home-content">
+  <div class="page-container">
+    <div class="header">
+      <div class="user-info">
+        <div class="logo">
+          <ion-icon name="leaf-outline"></ion-icon>
+        </div>
+        <div class="user-text">
+          <ion-text class="greeting-label">
+            WELCOME TO
+          </ion-text>
+          <h3>PREPMASTER</h3>
+        </div>
+      </div>
+      <ion-button
+        fill="clear"
+        class="bookmark-btn"
+        href="/tabs/saved"
+        aria-label="Saved Recipes">
 
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>
-      Start with Ionic
-      <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a>
-    </p>
+        <ion-icon
+          slot="icon-only"
+          name="bookmark-outline">
+        </ion-icon>
+
+      </ion-button>
+
+    </div>
+
+    
+    <div class="welcome">
+      <p>Fresh recipes for a delicious meal</p>
+      <h1>What are we cooking today?</h1>
+    </div>
+
+  
+    <div class="categories">
+
+      @for (category of categories(); track category.id) {
+
+       <ion-card
+          button="true"
+          class="category-card"
+          [class.green]="$index % 2 === 0"
+          [class.sage]="$index % 2 !== 0"
+          [href]="'/tabs/home/recipes/' + category.id">
+          <ion-card-content>
+            <div class="category-content">
+              <ion-text class="category-label">
+                <ion-icon name="restaurant-outline"></ion-icon>
+                BROWSE CATEGORY
+              </ion-text>
+              <h2>{{ category.name }}</h2>
+
+              <ion-text class="category-link">
+                Tap to see recipes
+                <ion-icon name="chevron-forward-outline"></ion-icon>
+              </ion-text>
+            </div>
+            <div class="category-image">
+              @if (category.image) {
+                <ion-img
+                  [src]="category.image"
+                  [alt]="category.name">
+                </ion-img>
+              }
+            </div>
+          </ion-card-content>
+       </ion-card>
+      }
+    </div>
   </div>
-</ion-content>
+
+
+  <ion-footer class="home-footer">
+  <ion-toolbar>
+    <div class="bottom-nav">
+
+      <ion-button fill="clear" class="nav-item active" href="/home">
+        <div class="nav-content">
+          <ion-icon name="home-outline"></ion-icon>
+          <ion-label>Home</ion-label>
+        </div>
+      </ion-button>
+
+      <ion-button fill="clear" class="nav-item" href="/explore">
+        <div class="nav-content">
+          <ion-icon name="compass-outline"></ion-icon>
+          <ion-label>Ingredient</ion-label>
+        </div>
+      </ion-button>
+
+      <ion-button fill="clear" class="nav-item" href="/saved">
+        <div class="nav-content">
+          <ion-icon name="bookmark-outline"></ion-icon>
+          <ion-label>Saved</ion-label>
+        </div>
+      </ion-button>
+
+      <ion-button fill="clear" class="nav-item" href="/plan">
+        <div class="nav-content">
+          <ion-icon name="calendar-outline"></ion-icon>
+          <ion-label>Plan</ion-label>
+        </div>
+      </ion-button>
+
+    </div>
+  </ion-toolbar>
+</ion-footer>

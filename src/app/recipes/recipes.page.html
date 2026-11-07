@@ -1,0 +1,72 @@
+<ion-content [fullscreen]="true" class="recipes-content">
+
+  <div class="page-container">
+
+    <div class="hero-section">
+      <ion-img
+        [src]="categoryImage()"
+        [alt]="categoryName()">
+      </ion-img>
+      <div class="hero-gradient"></div>
+      <div class="hero-title">
+        <h1>{{ categoryName() }}</h1>
+      </div>
+    </div>
+
+    <div class="main-content">
+
+      <ion-searchbar
+        class="recipe-search"
+        placeholder="Search recipes"
+        show-clear-button="focus"
+        mode="ios">
+      </ion-searchbar>
+
+      <ion-list class="recipe-list" lines="none">
+      
+@for (recipe of recipes(); track recipe.recipe_id) {
+  <ion-item>
+
+    <ion-label>
+      <h2>{{ recipe.recipe_name }}</h2>
+    </ion-label>
+
+    <div class="open-action" slot="end">
+      <ion-text>Open</ion-text>
+      <ion-icon name="arrow-forward"></ion-icon>
+    </div>
+
+  </ion-item>
+
+} @empty {
+  <div class="empty-state">
+    <ion-icon name="restaurant-outline"></ion-icon>
+    <ion-text>No recipes available.</ion-text>
+  </div>
+}
+
+      </ion-list>
+    </div>
+  </div>
+</ion-content>
+
+
+<ion-tab-bar slot="bottom" class="bottom-nav">
+  <ion-tab-button tab="home">
+    <ion-icon name="home"></ion-icon>
+    <ion-label>Home</ion-label>
+  </ion-tab-button>
+
+  <ion-tab-button tab="ingredient">
+    <ion-icon name="compass-outline"></ion-icon>
+    <ion-label>Explore</ion-label>
+  </ion-tab-button>
+  <ion-tab-button tab="saved">
+    <ion-icon name="bookmark-outline"></ion-icon>
+    <ion-label>Saved</ion-label>
+  </ion-tab-button>
+  <ion-tab-button tab="plan">
+    <ion-icon name="calendar-outline"></ion-icon>
+    <ion-label>Plan</ion-label>
+  </ion-tab-button>
+</ion-tab-bar>

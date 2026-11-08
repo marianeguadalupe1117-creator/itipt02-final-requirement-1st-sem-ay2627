@@ -4,12 +4,12 @@ import { FormsModule } from '@angular/forms';
 import { IonContent, IonHeader, IonTitle, IonToolbar } from '@ionic/angular';
 
 @Component({
-  selector: 'app-ingredient',
-  templateUrl: './ingredient.page.html',
-  styleUrls: ['./ingredient.page.scss'],
+  selector: 'app-instruction',
+  templateUrl: './instruction.page.html',
+  styleUrls: ['./instruction.page.scss'],
   imports: [IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule],
 })
-export class IngredientPage implements OnInit {
+export class InstructionPage implements OnInit {
   constructor() {}
 
   ngOnInit() {}

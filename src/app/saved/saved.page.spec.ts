@@ -1,17 +1,13 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { SavedPage } from './saved.page';
+import { Component } from '@angular/core';
+import { RouterLink } from '@angular/router';
+import { FormsModule } from '@angular/forms';
+import { IonContent, IonHeader, IonTitle, IonToolbar } from '@ionic/angular';
 
-describe('SavedPage', () => {
-  let component: SavedPage;
-  let fixture: ComponentFixture<SavedPage>;
-
-  beforeEach(() => {
-    fixture = TestBed.createComponent(SavedPage);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
-
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-});
+@Component({
+  selector: 'app-saved',
+  templateUrl: './saved.page.html',
+  styleUrls: ['./saved.page.scss'],
+  imports: [RouterLink, IonContent, IonHeader, IonTitle, IonToolbar, FormsModule],
+})
+export class SavedPage {
+  constructor() {}}

@@ -1,77 +1,41 @@
-import { Component, OnInit, signal } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import {
   IonContent,
-  IonImg,
   IonSearchbar,
   IonList,
   IonItem,
   IonLabel,
   IonIcon,
-  IonText,
-  IonTabBar,
-  IonTabButton
-} from '@ionic/angular';
-
+  IonButtons,
+  IonBackButton, IonTitle } from '@ionic/angular';
 import { addIcons } from 'ionicons';
-
 import {
-  searchOutline,
-  arrowForward,
-  restaurantOutline,
-  home,
-  compassOutline,
-  bookmarkOutline,
-  calendarOutline
+  arrowForwardOutline,
+  arrowBackOutline
 } from 'ionicons/icons';
-
-interface Recipe {
-  recipe_id: number;
-  recipe_name: string;
-}
 
 @Component({
   selector: 'app-recipes',
   templateUrl: './recipes.page.html',
   styleUrls: ['./recipes.page.scss'],
-  imports: [
-    
-    IonContent, IonContent,
-    IonImg,
+  imports: [IonTitle, 
+    RouterLink,
+    IonContent,
     IonSearchbar,
     IonList,
     IonItem,
     IonLabel,
     IonIcon,
-    IonText,
-    IonTabBar,
-    IonTabButton, 
-    CommonModule, 
-    FormsModule],
+    IonButtons,
+    IonBackButton
+  ]
 })
-export class RecipesPage implements OnInit {
-
-   categoryName = signal('Ulam Recipes');
-
-  categoryImage = signal(
-    'assets/images/ulam-banner.jpg'
-  );
-
-  recipes = signal<Recipe[]>([]);
-
-   constructor() {
+export class RecipesPage {
+  constructor() {
     addIcons({
-      searchOutline,
-      arrowForward,
-      restaurantOutline,
-      home,
-      compassOutline,
-      bookmarkOutline,
-      calendarOutline
+      arrowForwardOutline,
+      arrowBackOutline
     });
   }
-
-  ngOnInit() {}
 }

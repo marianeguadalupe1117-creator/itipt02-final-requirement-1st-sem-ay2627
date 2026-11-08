@@ -1,12 +1,11 @@
-
 <ion-content [fullscreen]="true" class="home-content">
   <div class="page-container">
     <div class="header">
-      <div class="user-info">
+      <div class="app">
         <div class="logo">
           <ion-icon name="leaf-outline"></ion-icon>
         </div>
-        <div class="user-text">
+        <div class="Weltext">
           <ion-text class="greeting-label">
             WELCOME TO
           </ion-text>
@@ -16,7 +15,7 @@
       <ion-button
         fill="clear"
         class="bookmark-btn"
-        href="/tabs/saved"
+        routerLink="/tab/saved"
         aria-label="Saved Recipes">
 
         <ion-icon
@@ -27,84 +26,159 @@
       </ion-button>
 
     </div>
+  </div>
 
-    
     <div class="welcome">
       <p>Fresh recipes for a delicious meal</p>
       <h1>What are we cooking today?</h1>
     </div>
-
   
-    <div class="categories">
-
-      @for (category of categories(); track category.id) {
-
-       <ion-card
-          button="true"
-          class="category-card"
-          [class.green]="$index % 2 === 0"
-          [class.sage]="$index % 2 !== 0"
-          [href]="'/tabs/home/recipes/' + category.id">
-          <ion-card-content>
-            <div class="category-content">
-              <ion-text class="category-label">
-                <ion-icon name="restaurant-outline"></ion-icon>
-                BROWSE CATEGORY
-              </ion-text>
-              <h2>{{ category.name }}</h2>
-
-              <ion-text class="category-link">
-                Tap to see recipes
-                <ion-icon name="chevron-forward-outline"></ion-icon>
-              </ion-text>
-            </div>
-            <div class="category-image">
-              @if (category.image) {
-                <ion-img
-                  [src]="category.image"
-                  [alt]="category.name">
-                </ion-img>
-              }
-            </div>
-          </ion-card-content>
-       </ion-card>
-      }
-    </div>
-  </div>
-
-
-  <ion-footer class="home-footer">
-  <ion-toolbar>
-    <div class="bottom-nav">
-
-      <ion-button fill="clear" class="nav-item active" href="/home">
-        <div class="nav-content">
-          <ion-icon name="home-outline"></ion-icon>
-          <ion-label>Home</ion-label>
+ <div class="categories">
+    <a routerLink="/tab/recipes/main-dish" class="card-link">
+      <div class="featured-card">
+        <div class="featured-info">
+          <span class="featured-label">Main Dish</span>
+          <br>
+          <p>
+          <ion-icon name="time-outline"></ion-icon>
+          Ready for a meal?
+          </p>
+        
+          <h2>Chicken Adobo</h2>
+        
         </div>
-      </ion-button>
 
-      <ion-button fill="clear" class="nav-item" href="/explore">
-        <div class="nav-content">
-          <ion-icon name="compass-outline"></ion-icon>
-          <ion-label>Ingredient</ion-label>
+        <div class="featured-image">
+          <img
+          src="https://imglink.cc/cdn/EwfO2oi4SM.jpg"
+          alt="Chicken Adobo"
+          />
         </div>
-      </ion-button>
+      </div>
+    </a>
 
-      <ion-button fill="clear" class="nav-item" href="/saved">
-        <div class="nav-content">
-          <ion-icon name="bookmark-outline"></ion-icon>
-          <ion-label>Saved</ion-label>
+     <a routerLink="/tab/recipes/soup" class="card-link">
+      <div class="featured-card2">
+        <div class="featured-info2">
+          <span class="featured-label2">Soup</span>
+          <h2>Pork inigang</h2>
+          <p>
+          <ion-icon name="time-outline"></ion-icon>
+          Ready for a meal?
+          </p>
         </div>
-      </ion-button>
 
-      <ion-button fill="clear" class="nav-item" href="/plan">
-        <div class="nav-content">
-          <ion-icon name="calendar-outline"></ion-icon>
-          <ion-label>Plan</ion-label>
+        <div class="featured-image">
+          <img
+          src="https://imglink.cc/cdn/TNrTeAatGW.jpg"
+          alt="Pork Sinigang"
+          />
         </div>
-      </ion-button>
+      </div>
+    </a>
 
-    </div>
-  </ion-toolbar>
-</ion-footer>
+     <a routerLink="/tab/recipes/noodles" class="card-link">
+      <div class="featured-card">
+        <div class="featured-info">
+          <span class="featured-label">Noodles</span>
+          <h2>Sweet Spaghetti</h2>
+          <p>
+          <ion-icon name="time-outline"></ion-icon>
+          Ready for a meal?
+          </p>
+        </div>
+
+        <div class="featured-image">
+          <img
+          src="https://imglink.cc/cdn/EwfO2oi4SM.jpg"
+          alt="Sweet Spaghetti"
+          />
+        </div>
+      </div>
+    </a>
+
+     <a routerLink="/tab/recipes/rice" class="card-link">
+      <div class="featured-card2">
+        <div class="featured-info2">
+          <span class="featured-label2">Rice</span>
+          <h2>Fried Garlic Rice</h2>
+          <p>
+          <ion-icon name="time-outline"></ion-icon>
+          Ready for a meal?
+          </p>
+        </div>
+
+        <div class="featured-image">
+          <img
+          src="https://imglink.cc/cdn/EwfO2oi4SM.jpg"
+          alt="Fried Rice"
+          />
+        </div>
+      </div>
+    </a>
+
+     <a routerLink="/tab/recipes/fried" class="card-link">
+      <div class="featured-card">
+        <div class="featured-info">
+          <span class="featured-label">Fried</span>
+          <h2>Lechon kawali</h2>
+          <p>
+          <ion-icon name="time-outline"></ion-icon>
+          Ready for a meal?
+          </p>
+        </div>
+
+        <div class="featured-image">
+          <img
+          src="https://imglink.cc/cdn/EwfO2oi4SM.jpg"
+          alt="Chicken Adobo"
+          />
+        </div>
+      </div>
+    </a>
+
+     <a routerLink="/tab/recipes/roated-grilled" class="card-link">
+      <div class="featured-card2">
+        <div class="featured-info2">
+          <span class="featured-label2">Roasted or Grilled</span>
+          <h2>Pork Barbeque</h2>
+          <p>
+          <ion-icon name="time-outline"></ion-icon>
+          Ready for a meal?
+          </p>
+        </div>
+
+        <div class="featured-image">
+          <img
+          src="https://imglink.cc/cdn/EwfO2oi4SM.jpg"
+          alt="Chicken Adobo"
+          />
+        </div>
+      </div>
+    </a>
+
+     <a routerLink="/tab/recipes/merienda" class="card-link">
+      <div class="featured-card">
+        <div class="featured-info">
+          <span class="featured-label">Merienda</span>
+          <h2>Bananaque</h2>
+          <p>
+          <ion-icon name="time-outline"></ion-icon>
+          Ready for a meal?
+          </p>
+        </div>
+
+        <div class="featured-image">
+          <img
+          src="https://imglink.cc/cdn/EwfO2oi4SM.jpg"
+          alt="Chicken Adobo"
+          />
+        </div>
+      </div>
+    </a>
+    
+
+    
+ </div>
+
+</ion-content>

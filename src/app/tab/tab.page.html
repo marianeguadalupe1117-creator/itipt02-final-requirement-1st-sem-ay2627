@@ -1,13 +1,23 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>tab</ion-title>
-  </ion-toolbar>
-</ion-header>
+<ion-tabs>
+  <ion-tab-bar slot="bottom">
+    <ion-tab-button tab="home" href="/tab/home">
+      <ion-icon name="home-outline" aria-hidden="true"></ion-icon>
+      <ion-label>Home</ion-label>
+    </ion-tab-button>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">tab</ion-title>
-    </ion-toolbar>
-  </ion-header>
-</ion-content>
+    <ion-tab-button tab="posts" href="/tab/posts">
+      <ion-icon name="images-outline" aria-hidden="true"></ion-icon>
+      <ion-label>Posts</ion-label>
+    </ion-tab-button>
+
+    <ion-tab-button tab="saved" href="/tab/saved">
+      <ion-icon name="bookmark-outline" aria-hidden="true"></ion-icon>
+      <ion-label>Saved</ion-label>
+    </ion-tab-button>
+
+    <ion-tab-button tab="plan" href="/tab/plan">
+      <ion-icon name="calendar-outline" aria-hidden="true"></ion-icon>
+      <ion-label>Meal Plan</ion-label>
+    </ion-tab-button>
+  </ion-tab-bar>
+</ion-tabs>

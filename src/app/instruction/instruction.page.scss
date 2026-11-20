@@ -1,0 +1,111 @@
+.instruction-content {
+  --background: #e8efeb;
+}
+
+.recipe {
+  width: min(100% - 32px, 640px);
+  margin: 0 auto;
+  padding: 16px 0 28px;
+  color: #153e2c;
+}
+
+.back-link {
+  --color: #176f4b;
+  margin-bottom: 12px;
+  font-weight: 600;
+}
+
+.recipe-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.icon-button {
+  --background: #f5f8f6;
+  --border-radius: 50%;
+  --box-shadow: none;
+  --color: #176f4b;
+  --padding-start: 0;
+  --padding-end: 0;
+  width: 44px;
+  height: 44px;
+  margin: 0;
+  font-size: 24px;
+}
+
+.recipe-hero {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  min-height: clamp(150px, 33vw, 240px);
+  padding: 16px;
+  overflow: hidden;
+  border-radius: 20px 20px 0 0;
+  background: #d4e2d8 url('https://imglink.cc/cdn/TNrTeAatGW.jpg') center / cover;
+}
+
+.recipe-hero ion-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.recipe-hero ion-img::part(image) {
+  object-fit: cover;
+}
+
+.recipe-hero::after {
+  position: absolute;
+  inset: 0;
+  content: '';
+  background: linear-gradient(transparent 25%, #f5f8f6 98%);
+}
+
+.dish-title {
+  position: relative;
+  z-index: 1;
+  margin: 0;
+  font-family: Georgia, serif;
+  font-size: clamp(1.5rem, 5vw, 2.3rem);
+  font-weight: 700;
+}
+
+.recipe-section {
+  padding: 16px;
+  background: #f5f8f6;
+}
+
+.recipe-section:last-child {
+  border-radius: 0 0 20px 20px;
+}
+
+.section-title {
+  display: block;
+  margin: 0 0 8px;
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+
+.ingredients-list,
+.steps-list {
+  padding: 0;
+  background: transparent;
+}
+
+.recipe-section ion-item {
+  --background: transparent;
+  --padding-start: 0;
+  --inner-padding-end: 0;
+  --border-color: #dfe8e1;
+  --color: #153e2c;
+}
+
+.quantity {
+  text-align: end;
+}
+
+.recipe-step {
+  line-height: 1.5;
+}

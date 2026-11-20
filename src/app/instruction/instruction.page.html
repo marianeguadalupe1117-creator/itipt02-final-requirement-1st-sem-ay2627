@@ -1,13 +1,76 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>instruction</ion-title>
-  </ion-toolbar>
-</ion-header>
+<ion-content class="instruction-content">
+  <ion-grid class="recipe" role="main">
+    @if (loading()) {
+    <ion-text role="status">Loading recipe…</ion-text>
+    } @else if (dish(); as recipe) {
+    <ion-row class="recipe-actions">
+      <ion-button
+        class="icon-button"
+        [routerLink]="fromSaved() === 'true' ? ['/tab/saved'] : ['/tab/recipes', recipe.category_id]"
+        [attr.aria-label]="fromSaved() === 'true' ? 'Back to Saved' : 'Back to dishes'"
+      >
+        <ion-icon slot="icon-only" name="arrow-back-outline" aria-hidden="true"></ion-icon>
+      </ion-button>
+      <ion-button
+        class="icon-button"
+        aria-label="Save dish"
+        [attr.aria-pressed]="saved()"
+        [disabled]="saving()"
+        (click)="toggleSaved()"
+      >
+        <ion-icon slot="icon-only" [name]="saved() ? 'bookmark' : 'bookmark-outline'" aria-hidden="true"></ion-icon>
+      </ion-button>
+    </ion-row>
+    @if (saveFailed()) {
+    <ion-text role="alert">Could not update this bookmark. Try again.</ion-text>
+    }
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">instruction</ion-title>
-    </ion-toolbar>
-  </ion-header>
+    <ion-row class="recipe-hero">
+      @if (recipe.image_url) {
+      <ion-img [src]="recipe.image_url" alt="" (ionError)="$any($event.target).hidden = true" />
+      }
+      <ion-text class="dish-title" role="heading" aria-level="1">{{ recipe.name }}</ion-text>
+    </ion-row>
+
+    <ion-grid class="recipe-section" role="region" aria-labelledby="ingredients-heading">
+      <ion-text class="section-title" id="ingredients-heading" role="heading" aria-level="2">Ingredients</ion-text>
+      <ion-list class="ingredients-list" role="list">
+        @for (ingredient of recipe.ingredients; track $index) {
+        <ion-item role="listitem">
+          <ion-label class="ion-text-wrap">{{ ingredient.name }}</ion-label>
+          <ion-text slot="end" class="quantity">{{ ingredient.quantity }} {{ ingredient.unit }}</ion-text>
+        </ion-item>
+        } @empty {
+        <ion-item role="listitem">No ingredients listed for this dish.</ion-item>
+        }
+      </ion-list>
+    </ion-grid>
+
+    <ion-grid class="recipe-section" role="region" aria-labelledby="steps-heading">
+      <ion-text class="section-title" id="steps-heading" role="heading" aria-level="2">How to cook</ion-text>
+      @if (recipe.steps.length > 0) {
+      <ion-list class="steps-list" lines="none" role="list">
+        @for (step of recipe.steps; track step.id) {
+        <ion-item role="listitem" class="recipe-step">
+          <ion-text slot="start">{{ step.number }}.</ion-text>
+          <ion-label class="ion-text-wrap">{{ step.text }}</ion-label>
+        </ion-item>
+        }
+      </ion-list>
+      } @else {
+      <ion-text>No cooking instructions listed for this dish.</ion-text>
+      }
+    </ion-grid>
+    } @else {
+    <ion-text role="alert">Could not load this recipe.</ion-text>
+    <ion-button class="back-link" fill="clear" routerLink="/tab/home">Back to categories</ion-button>
+    }
+  </ion-grid>
+  <ion-toast
+    color="success"
+    [isOpen]="showSavedToast()"
+    message="Saved Successfully!"
+    [duration]="2000"
+    (didDismiss)="showSavedToast.set(false)"
+  />
 </ion-content>

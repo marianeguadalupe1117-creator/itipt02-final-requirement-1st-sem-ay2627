@@ -1,0 +1,68 @@
+.composer-content {
+  --background: var(--paper);
+  --color: var(--ink);
+}
+
+.composer-fields {
+  display: grid;
+  padding: 0;
+  gap: 16px;
+  width: min(100% - 32px, 540px);
+  margin: 20px auto;
+}
+
+.composer-fields ion-input,
+.composer-fields ion-textarea {
+  --background: #fffdf7;
+  --padding-start: 10px;
+  --padding-end: 10px;
+  --highlight-height: 0;
+  min-width: 0;
+  overflow: hidden;
+  border: 1px solid #9bb7a8;
+  border-radius: 8px;
+}
+
+.photo-picker {
+  --background: #e7eee2;
+  --color: var(--green);
+  --box-shadow: none;
+  --border-color: #759b82;
+  --border-style: dashed;
+  --border-width: 1px;
+  --border-radius: 14px;
+  --padding-top: 16px;
+  --padding-bottom: 16px;
+  margin: 0;
+  text-transform: none;
+}
+
+.photo-picker::part(native) {
+  flex-direction: column;
+  gap: 6px;
+  white-space: normal;
+}
+
+.photo-picker ion-icon {
+  font-size: 28px;
+}
+
+.photo-picker ion-img {
+  width: 100%;
+  overflow: hidden;
+  border-radius: 8px;
+}
+
+.photo-picker ion-img::part(image) {
+  max-height: 210px;
+  object-fit: cover;
+}
+
+.photo-picker ion-note {
+  color: inherit;
+  font-size: 0.75rem;
+}
+
+.form-error {
+  color: #992b2b;
+}

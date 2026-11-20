@@ -1,0 +1,109 @@
+.calendar-card {
+  margin: 0;
+  border-radius: clamp(17px, 4vw, 22px);
+  background: #ffffff;
+  box-shadow: 0 5px 25px rgba(24, 73, 46, 0.05);
+
+  ion-card-content {
+    padding: clamp(8px, 3vw, 26px);
+  }
+}
+
+.month-navigation {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: clamp(15px, 3vw, 24px);
+
+  .month-title {
+    margin: 0;
+    font-family: Georgia, serif;
+    font-size: clamp(18px, 2.5vw, 24px);
+    font-weight: 700;
+    color: var(--dark-green);
+  }
+
+  ion-button {
+    --color: var(--forest-green);
+    --border-radius: 12px;
+    --padding-start: 10px;
+    --padding-end: 10px;
+    margin: 0;
+
+    ion-icon {
+      font-size: 21px;
+    }
+  }
+}
+
+.calendar-grid {
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: clamp(3px, 1vw, 10px);
+}
+
+.weekday {
+  text-align: center;
+  font-size: clamp(10px, 1.5vw, 13px);
+  font-weight: 700;
+  color: #839b8b;
+  padding: 10px 0;
+}
+
+.calendar-day {
+  --background: #f3f7f4;
+  --color: #153e2c;
+  --border-radius: clamp(9px, 2vw, 13px);
+  --border-width: 1px;
+  --border-style: solid;
+  --border-color: transparent;
+  --box-shadow: none;
+  --padding-start: 0;
+  --padding-end: 0;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  min-width: 0;
+  min-height: 0;
+  margin: 0;
+  font-family: inherit;
+  font-size: clamp(12px, 2vw, 17px);
+  font-weight: 500;
+
+  &::part(native) {
+    flex-direction: column;
+    gap: 3px;
+    min-height: 0;
+    padding-block: 0;
+  }
+
+  &.today {
+    --border-color: var(--forest-green);
+    --color: var(--forest-green);
+    font-weight: 700;
+  }
+
+  &.selected {
+    --background: var(--forest-green);
+    --color: #ffffff;
+    --border-color: var(--forest-green);
+    font-weight: 700;
+  }
+
+  &::part(native):focus-visible {
+    outline: 2px solid var(--forest-green);
+    outline-offset: -2px;
+  }
+}
+
+.meal-dot {
+  display: block;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--forest-green);
+}
+
+.calendar-day.selected .meal-dot {
+  background: white;
+}

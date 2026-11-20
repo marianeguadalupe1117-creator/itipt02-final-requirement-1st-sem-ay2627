@@ -1,13 +1,144 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>plan</ion-title>
-  </ion-toolbar>
-</ion-header>
+<ion-content [fullscreen]="true" class="plan-content">
+  <ion-grid class="plan-container" role="main">
+    <ion-row class="page-header">
+      <ion-col class="plan-title">
+        <ion-text class="app-label">PREPMASTER</ion-text>
+        <ion-text class="page-title" role="heading" aria-level="1">Meal Planner</ion-text>
+      </ion-col>
+      <ion-avatar class="header-icon">
+        <ion-icon name="calendar-outline" aria-hidden="true"></ion-icon>
+      </ion-avatar>
+    </ion-row>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">plan</ion-title>
-    </ion-toolbar>
-  </ion-header>
+    <ion-card class="calendar-card">
+      <ion-card-content>
+        <ion-row class="month-navigation">
+          <ion-button fill="clear" (click)="changeMonth(-1)" aria-label="Previous month">
+            <ion-icon slot="icon-only" name="chevron-back-outline"></ion-icon>
+          </ion-button>
+          <ion-text class="month-title" role="heading" aria-level="2">{{ monthLabel() }}</ion-text>
+          <ion-button fill="clear" (click)="changeMonth(1)" aria-label="Next month">
+            <ion-icon slot="icon-only" name="chevron-forward-outline"></ion-icon>
+          </ion-button>
+        </ion-row>
+
+        <ion-grid class="calendar-grid">
+          @for (weekday of weekDays; track weekday) {
+          <ion-text class="weekday">{{ weekday }}</ion-text>
+          } @for (day of calendarDays(); track $index) { @if (day) { @let date = day.toDateString(); @let selected =
+          date === selectedDate().toDateString();
+          <ion-button
+            class="calendar-day"
+            [class.today]="date === today().toDateString()"
+            [class.selected]="selected"
+            [disabled]="isPastDay(day)"
+            [attr.aria-label]="date"
+            [attr.aria-pressed]="selected"
+            (click)="selectDay(day)"
+          >
+            {{ day.getDate() }} @if (hasMeals(day)) {
+            <ion-text class="meal-dot" aria-hidden="true"></ion-text>
+            }
+          </ion-button>
+          } @else {
+          <ion-text aria-hidden="true"></ion-text>
+          } }
+        </ion-grid>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-grid class="meal-section" role="region" aria-labelledby="meals-heading">
+      <ion-row class="section-header">
+        <ion-text class="meals-title" id="meals-heading" role="heading" aria-level="2">Planned Meals</ion-text>
+        <ion-text class="selected-date">{{ dateLabel() }}</ion-text>
+      </ion-row>
+
+      @for (meal of selectedMeals(); track meal) {
+      <ion-item lines="none" class="meal-item">
+        <ion-label>
+          <ion-text class="meal-name" role="heading" aria-level="3">{{ meal.name }}</ion-text>
+        </ion-label>
+        <div slot="end" class="meal-actions">
+          <ion-button
+            fill="clear"
+            [disabled]="isPastDay(selectedDate()) || editingMeal() === meal"
+            [attr.aria-label]="'Edit ' + meal.name"
+            (click)="editMeal(meal)"
+          >
+            <ion-icon slot="icon-only" name="pencil-outline" aria-hidden="true"></ion-icon>
+          </ion-button>
+          <ion-button fill="clear" color="danger" (click)="deleteMeal(meal)" aria-label="Remove meal">
+            <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
+          </ion-button>
+        </div>
+      </ion-item>
+      } @empty {
+      <ion-row class="empty-meals">
+        <ion-icon name="calendar-outline" aria-hidden="true"></ion-icon>
+        <ion-text>No meals planned for this day.</ion-text>
+      </ion-row>
+      } @if (editingMeal(); as meal) {
+      <ion-text role="status">Editing {{ meal.name }}</ion-text>
+      }
+      <ion-grid class="add-meal">
+        <ion-select
+          label="Category"
+          label-placement="stacked"
+          placeholder="Choose a category"
+          [value]="categoryId()"
+          (ionChange)="chooseCategory($event.detail.value)"
+        >
+          @for (category of categories(); track category.id) {
+          <ion-select-option [value]="category.id.toString()">{{ category.name }}</ion-select-option>
+          }
+        </ion-select>
+        <ion-select
+          label="Dish"
+          label-placement="stacked"
+          [placeholder]="loadingDishes() ? 'Loading dishes…' : 'Choose a dish'"
+          [value]="dishId()"
+          [disabled]="dishes().length === 0"
+          (ionChange)="dishId.set($event.detail.value)"
+        >
+          @for (dish of dishes(); track dish.id) {
+          <ion-select-option [value]="dish.id.toString()">{{ dish.name }}</ion-select-option>
+          }
+        </ion-select>
+        <ion-button (click)="saveMeal()" [disabled]="!dishId() || isPastDay(selectedDate())">
+          @if (editingMeal()) { Save changes } @else {
+          <ion-icon name="add-outline" slot="start"></ion-icon>
+          Add }
+        </ion-button>
+        @if (editingMeal()) {
+        <ion-button fill="outline" class="cancel-edit" (click)="cancelEdit()">Cancel</ion-button>
+        }
+      </ion-grid>
+      @if (loadError()) {
+      <ion-text role="alert">{{ loadError() }}</ion-text>
+      } @else if (categoryId() && !loadingDishes() && dishes().length === 0) {
+      <ion-text>No dishes in this category.</ion-text>
+      }
+    </ion-grid>
+  </ion-grid>
+  <ion-toast
+    color="success"
+    [isOpen]="showEditSuccessToast()"
+    message="Edit Successful!"
+    [duration]="2000"
+    (didDismiss)="showEditSuccessToast.set(false)"
+  />
+  <ion-toast
+    color="success"
+    [isOpen]="showDeleteSuccessToast()"
+    message="Deleted Successful!"
+    [duration]="2000"
+    (didDismiss)="showDeleteSuccessToast.set(false)"
+  />
+  <ion-toast
+    color="success"
+    [isOpen]="showAddSuccessToast()"
+    message="Added Successfully!"
+    [duration]="2000"
+    (didDismiss)="showAddSuccessToast.set(false)"
+  />
 </ion-content>

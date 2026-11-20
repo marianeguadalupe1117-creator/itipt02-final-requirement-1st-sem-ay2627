@@ -1,0 +1,28 @@
+@let recipePost = post();
+
+<ion-row
+  class="post-row"
+  role="article"
+  [class.own-post]="ownPost()"
+  [class.align-right]="ownPostOnLeft() ? !ownPost() : ownPost()"
+>
+  <ion-avatar class="post-avatar" aria-hidden="true">
+    <ion-icon name="person-outline"></ion-icon>
+  </ion-avatar>
+  <ion-card class="post-bubble">
+    <ion-row class="post-header">
+      <ion-text class="author">{{ recipePost.author }}</ion-text>
+      <ng-content />
+    </ion-row>
+    <ion-row class="recipe-cover">
+      <ion-img [src]="'/api/posts/' + recipePost.id + '/image?v=' + imageVersion()" alt="" />
+      <ion-card-title class="dish-name" role="heading" aria-level="3">{{ recipePost.dish_name }}</ion-card-title>
+    </ion-row>
+    <ion-accordion-group class="post-text" [value]="recipeOpen() ? 'recipe' : null">
+      <ion-accordion value="recipe">
+        <ion-item slot="header" lines="none"><ion-label>Read recipe</ion-label></ion-item>
+        <ion-text slot="content" class="recipe-text">{{ recipePost.recipe }}</ion-text>
+      </ion-accordion>
+    </ion-accordion-group>
+  </ion-card>
+</ion-row>

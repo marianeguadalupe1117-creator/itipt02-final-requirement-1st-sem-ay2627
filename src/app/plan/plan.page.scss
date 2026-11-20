@@ -1,0 +1,172 @@
+:host {
+  --forest-green: #176f4b;
+  --dark-green: #153e2c;
+
+  display: block;
+  height: 100%;
+}
+
+.plan-content {
+  --background: #eef3ef;
+}
+
+.plan-container {
+  width: 100%;
+  max-width: 850px;
+  margin: 0 auto;
+
+  padding: clamp(16px, 3vw, 32px) clamp(12px, 3vw, 32px) 40px;
+
+  box-sizing: border-box;
+}
+
+.plan-title {
+  padding: 0;
+}
+
+.app-label,
+.page-title {
+  display: block;
+}
+
+.page-header {
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: clamp(18px, 4vw, 24px);
+}
+
+.app-label {
+  margin-bottom: 6px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: #839b8b;
+}
+
+.page-title {
+  font-family: Georgia, serif;
+  font-size: clamp(27px, 4vw, 38px);
+  font-weight: 700;
+  color: var(--dark-green);
+}
+
+.header-icon {
+  width: clamp(42px, 10vw, 48px);
+  height: clamp(42px, 10vw, 48px);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: #dfece4;
+  border-radius: 15px;
+
+  ion-icon {
+    font-size: 24px;
+    color: var(--forest-green);
+  }
+}
+
+.meal-section {
+  padding: 0;
+  margin-top: clamp(24px, 5vw, 30px);
+}
+
+.section-header {
+  flex-direction: column;
+  margin-bottom: 18px;
+}
+
+.meals-title {
+  margin-bottom: 5px;
+  font-family: Georgia, serif;
+  font-size: clamp(21px, 4vw, 23px);
+  color: var(--dark-green);
+}
+
+.selected-date {
+  font-size: 13px;
+  color: #839b8b;
+}
+
+.empty-meals {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  min-height: 130px;
+  padding: 20px;
+
+  border: 1px dashed #cbdcd1;
+  border-radius: 17px;
+
+  color: #839b8b;
+  text-align: center;
+
+  ion-icon {
+    font-size: 30px;
+    margin-bottom: 8px;
+  }
+
+  ion-text {
+    font-size: 13px;
+    margin: 0;
+  }
+}
+
+.meal-item {
+  --background: #ffffff;
+  --border-radius: 13px;
+  --padding-start: 16px;
+  --inner-padding-end: 6px;
+
+  margin-bottom: 10px;
+  border-radius: 13px;
+
+  .meal-name {
+    color: var(--dark-green);
+    font-weight: 600;
+  }
+}
+
+.meal-actions {
+  display: flex;
+
+  ion-button {
+    margin-inline: 0;
+  }
+}
+
+.add-meal {
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  margin-top: 18px;
+
+  ion-select {
+    --padding-start: 10px;
+    --padding-end: 10px;
+    width: 100%;
+    min-width: 0;
+    margin-top: 4px;
+    border: 1px solid #dce9df;
+    border-radius: 13px;
+    background: #fff;
+    color: var(--dark-green);
+  }
+
+  ion-button {
+    grid-column: 1 / -1;
+    --background: var(--forest-green);
+    --border-radius: 12px;
+    margin: 0;
+  }
+
+  .cancel-edit {
+    --background: transparent;
+    --border-color: var(--forest-green);
+    --color: var(--forest-green);
+  }
+}

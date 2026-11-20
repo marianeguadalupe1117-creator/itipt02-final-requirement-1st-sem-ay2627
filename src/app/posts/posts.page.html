@@ -1,0 +1,165 @@
+<ion-header>
+  <ion-toolbar class="posts-toolbar">
+    <ion-title>Posts</ion-title>
+    <ion-buttons slot="end">
+      <ion-button class="share-button" aria-label="Share a recipe" (click)="openEditor()">
+        <ion-icon name="add-outline" slot="icon-only" aria-hidden="true"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="posts-content">
+  <ion-grid class="feed-page" role="main">
+    <ion-segment
+      class="feed-tabs"
+      aria-label="Recipe views"
+      [value]="tab()"
+      (ionChange)="selectTab($event.detail.value === 'profile' ? 'profile' : 'feed')"
+    >
+      <ion-segment-button value="feed" aria-label="For You" title="For You">
+        <ion-icon name="newspaper-outline" aria-hidden="true"></ion-icon>
+      </ion-segment-button>
+      <ion-segment-button value="profile" aria-label="My Profile" title="My Profile">
+        <ion-icon name="person-outline" aria-hidden="true"></ion-icon>
+      </ion-segment-button>
+    </ion-segment>
+
+    @if (notice()) {
+    <ion-text class="success-message" role="status">
+      <ion-icon name="checkmark-circle-outline" aria-hidden="true"></ion-icon>
+      {{ notice() }}
+    </ion-text>
+    } @if (actionError()) {
+    <ion-text role="alert">{{ actionError() }}</ion-text>
+    }
+    <ion-grid class="feed-section" role="region" aria-labelledby="feed-heading">
+      <ion-row class="feed-controls">
+        <ion-text id="feed-heading" role="heading" aria-level="2"
+          >{{ tab() === 'feed' ? 'Latest recipes' : 'My recipes' }}</ion-text
+        >
+        <ion-button
+          class="refresh-button"
+          aria-label="Refresh recipes"
+          (click)="loadPosts()"
+          [disabled]="loading() || posting() || updatingPost()"
+        >
+          <ion-icon slot="icon-only" name="refresh-outline" aria-hidden="true"></ion-icon>
+        </ion-button>
+      </ion-row>
+      @if (hasPostsInTab()) {
+      <ion-searchbar
+        class="search-box"
+        aria-label="Search by dish or cook"
+        placeholder="Search by dish or cook"
+        [value]="search()"
+        (ionInput)="searchPosts($event.detail.value ?? '')"
+      />
+      } @if (loading()) {
+      <ion-text class="feed-message" role="status">Loading recipes…</ion-text>
+      } @else if (feedError()) {
+      <ion-text class="feed-message" role="alert">Could not load the recipe feed. Tap refresh to try again.</ion-text>
+      }
+      <ion-grid class="post-feed">
+        @for (post of visiblePosts(); track post.id) {
+        <app-post-card
+          [post]="post"
+          [ownPost]="post.author_id === user()?.id"
+          [ownPostOnLeft]="true"
+          [imageVersion]="imageVersion()"
+        >
+          <ion-button
+            fill="clear"
+            class="post-menu"
+            [attr.aria-label]="'Options for ' + post.dish_name"
+            [disabled]="updatingPost() || loading()"
+            (click)="openPostMenu(post)"
+          >
+            <ion-icon slot="icon-only" name="ellipsis-horizontal" aria-hidden="true"></ion-icon>
+          </ion-button>
+        </app-post-card>
+        }
+      </ion-grid>
+      @if (!loading() && !feedError() && visiblePosts().length === 0) {
+      <ion-card class="empty-feed">
+        @if (hasPostsInTab()) {
+        <ion-text>No recipes match your search.</ion-text>
+        <ion-button (click)="searchPosts('')">Clear search</ion-button>
+        } @else {
+        <ion-text
+          >{{ tab() === 'profile' ? 'You haven’t posted a recipe yet.' : 'No recipes have been posted yet.' }}</ion-text
+        >
+        <ion-button (click)="openEditor()">Share a recipe</ion-button>
+        }
+      </ion-card>
+      }
+    </ion-grid>
+  </ion-grid>
+</ion-content>
+
+<ion-modal
+  [isOpen]="showForm()"
+  [canDismiss]="canCloseForm"
+  [attr.aria-label]="editing() ? 'Edit recipe' : 'Share a recipe'"
+  (didDismiss)="resetForm()"
+>
+  <ng-template>
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>{{ editing() ? 'Edit recipe' : 'Share a recipe' }}</ion-title>
+        <ion-buttons slot="end">
+          <ion-button [disabled]="posting()" (click)="showForm.set(false)">Cancel</ion-button>
+          <ion-button [disabled]="posting() || loading()" (click)="publish()">
+            @if (editing()) { {{ posting() ? 'Saving…' : 'Save' }} } @else { {{ posting() ? 'Posting…' : 'Post' }} }
+          </ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-header>
+
+    <ion-content class="composer-content">
+      <ion-grid class="composer-fields">
+        <ion-button class="photo-picker" expand="block" (click)="pickPhoto()">
+          @if (photoPreview(); as preview) {
+          <ion-img [src]="preview" alt="" />
+          } @else if (editing(); as post) {
+          <ion-img [src]="'/api/posts/' + post.id + '/image?v=' + imageVersion()" alt="" />
+          } @else {
+          <ion-icon name="camera-outline" aria-hidden="true"></ion-icon>
+          }
+          <ion-text>{{ photoPreview() || editing() ? 'Change dish photo' : 'Add a dish photo' }}</ion-text>
+          <ion-note>JPG, PNG, or WebP up to 5 MB</ion-note>
+        </ion-button>
+        <ion-input
+          label="Dish name"
+          label-placement="stacked"
+          name="dishName"
+          [(ngModel)]="dishName"
+          [maxlength]="100"
+          (keydown.enter)="publish()"
+          required
+        />
+        <ion-textarea
+          label="Recipe"
+          label-placement="stacked"
+          name="recipe"
+          [(ngModel)]="recipe"
+          placeholder="List the ingredients and explain how to cook the dish."
+          [maxlength]="8000"
+          [rows]="5"
+          required
+        />
+        @if (postError()) {
+        <ion-text class="form-error" role="alert">{{ postError() }}</ion-text>
+        }
+      </ion-grid>
+    </ion-content>
+  </ng-template>
+</ion-modal>
+
+<ion-toast
+  color="success"
+  [isOpen]="showSavedToast()"
+  message="Saved Successfully!"
+  [duration]="2000"
+  (didDismiss)="showSavedToast.set(false)"
+/>

@@ -1,4 +1,3 @@
-
 import type { Routes } from '@angular/router';
 
 import { requireLogin } from './auth/auth.service';
@@ -16,29 +15,24 @@ export const routes: Routes = [
   {
     path: 'tab',
     canActivateChild: [requireLogin],
-    loadComponent: () =>
-      import('./tab/tab.page').then((m) => m.TabPage),
+    loadComponent: () => import('./tab/tab.page').then((m) => m.TabPage),
 
     children: [
       {
         path: 'home',
-        loadComponent: () =>
-          import('./home/home.page').then((m) => m.HomePage),
+        loadComponent: () => import('./home/home.page').then((m) => m.HomePage),
       },
       {
         path: 'ingredients',
-        loadComponent: () =>
-          import('./ingredients/ingredients.page').then((m) => m.IngredientsPage),
+        loadComponent: () => import('./ingredients/ingredients.page').then((m) => m.IngredientsPage),
       },
       {
         path: 'saved',
-        loadComponent: () =>
-          import('./saved/saved.page').then((m) => m.SavedPage),
+        loadComponent: () => import('./saved/saved.page').then((m) => m.SavedPage),
       },
       {
         path: 'plan',
-        loadComponent: () =>
-          import('./plan/plan.page').then((m) => m.PlanPage),
+        loadComponent: () => import('./plan/plan.page').then((m) => m.PlanPage),
       },
       {
         path: 'posts',
@@ -46,13 +40,11 @@ export const routes: Routes = [
       },
       {
         path: 'recipes/:categoryId',
-        loadComponent: () =>
-          import('./recipes/recipes.page').then((m) => m.RecipesPage),
+        loadComponent: () => import('./recipes/recipes.page').then((m) => m.RecipesPage),
       },
       {
         path: 'instruction/:dishId',
-        loadComponent: () =>
-          import('./instruction/instruction.page').then((m) => m.InstructionPage),
+        loadComponent: () => import('./instruction/instruction.page').then((m) => m.InstructionPage),
       },
       {
         path: '',
@@ -65,5 +57,9 @@ export const routes: Routes = [
     path: '',
     redirectTo: 'tab/home',
     pathMatch: 'full',
+  },
+  {
+    path: 'saved',
+    loadComponent: () => import('./saved/saved.page').then((m) => m.SavedPage),
   },
 ];

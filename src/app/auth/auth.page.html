@@ -1,0 +1,100 @@
+<ion-content class="auth-content">
+  <ion-grid class="auth-screen" role="main">
+    <ion-grid class="auth-garden" aria-hidden="true">
+      <ion-text class="garden-sprout sprout-left" />
+      <ion-text class="garden-sprout sprout-inner-left" />
+      <ion-text class="garden-sprout sprout-inner-right" />
+      <ion-text class="garden-sprout sprout-right" />
+    </ion-grid>
+
+    <ion-row class="auth-brand">
+      <ion-avatar class="brand-icon">
+        <ion-icon name="leaf-outline" aria-hidden="true" />
+      </ion-avatar>
+      <ion-text class="brand-name">PREPMASTER</ion-text>
+    </ion-row>
+
+    <ion-grid class="auth-form">
+      <ion-text class="auth-title" role="heading" aria-level="1">{{ registering() ? 'Sign Up' : 'Log In' }}</ion-text>
+
+      @if (registered() === 'true') {
+      <ion-text class="form-message" role="status">Account created. You can now log in.</ion-text>
+      }
+
+      <ion-grid class="auth-fields" ngForm #form="ngForm">
+        @if (registering()) {
+        <ion-input
+          name="name"
+          [(ngModel)]="name"
+          aria-label="Name"
+          placeholder="Enter your name"
+          autocomplete="name"
+          [maxlength]="100"
+          (keydown.enter)="submit(form)"
+          required
+        />
+        }
+        <ion-input
+          type="email"
+          name="email"
+          [(ngModel)]="email"
+          aria-label="Email"
+          placeholder="Enter your email"
+          autocomplete="email"
+          [maxlength]="150"
+          (keydown.enter)="submit(form)"
+          email
+          required
+        />
+        <ion-input
+          [type]="showPassword() ? 'text' : 'password'"
+          name="password"
+          [(ngModel)]="password"
+          aria-label="Password"
+          [placeholder]="registering() ? 'Create a password' : 'Enter your password'"
+          [autocomplete]="registering() ? 'new-password' : 'current-password'"
+          [attr.aria-describedby]="registering() ? 'password-help' : null"
+          [clearOnEdit]="false"
+          (keydown.enter)="submit(form)"
+          required
+        >
+          <ion-button
+            slot="end"
+            fill="clear"
+            class="password-toggle"
+            [attr.aria-label]="showPassword() ? 'Hide password' : 'Show password'"
+            (click)="showPassword.set(!showPassword())"
+          >
+            {{ showPassword() ? 'Hide' : 'Show' }}
+          </ion-button>
+        </ion-input>
+        @if (registering()) {
+        <ion-input
+          [type]="showPassword() ? 'text' : 'password'"
+          name="confirmPassword"
+          [(ngModel)]="confirmPassword"
+          aria-label="Confirm password"
+          placeholder="Confirm your password"
+          autocomplete="new-password"
+          [clearOnEdit]="false"
+          (keydown.enter)="submit(form)"
+          required
+        />
+        <ion-note id="password-help">Use 8 to 48 characters.</ion-note>
+        } @if (message()) {
+        <ion-text class="form-message form-error" role="alert">{{ message() }}</ion-text>
+        }
+        <ion-button class="submit-button" expand="block" [disabled]="submitting()" (click)="submit(form)">
+          {{ registering() ? 'Create account' : 'Log in' }}
+        </ion-button>
+      </ion-grid>
+
+      <ion-text class="auth-switch">
+        @if (registering()) { Already have an account?
+        <ion-button fill="clear" routerLink="/login">Log in</ion-button> } @else { New to PrepMaster?
+        <ion-button fill="clear" routerLink="/register">Sign up</ion-button>
+        }
+      </ion-text>
+    </ion-grid>
+  </ion-grid>
+</ion-content>

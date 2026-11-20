@@ -1,0 +1,7 @@
+{
+  "name": "RecipeApplicationFront",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular-standalone"
+}

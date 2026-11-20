@@ -1,67 +1,13 @@
-<ion-header>
+<ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>Ingredients</ion-title>
+    <ion-title>ingredients</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-  <ion-grid class="ingredients-content" role="main">
-    @if (loading()) {
-    <ion-text role="status">Loading ingredients…</ion-text>
-    } @else if (failed()) {
-    <ion-text role="alert">Couldn’t load ingredients.</ion-text>
-    <ion-button (click)="loadIngredients()">Try again</ion-button>
-    } @else {
-    <ion-grid class="ingredient-section" role="region" aria-labelledby="category-heading">
-      <ion-text class="ingredient-heading" id="category-heading" role="heading" aria-level="1"
-        >Ingredient categories</ion-text
-      >
-      @if (categories()[0]; as firstCategory) {
-      <ion-accordion-group [multiple]="true" [value]="[firstCategory.id.toString()]">
-        @for (category of categories(); track category.id) {
-        <ion-accordion [value]="category.id.toString()">
-          <ion-item slot="header"><ion-label>{{ category.name }}</ion-label></ion-item>
-          <ion-list slot="content" lines="none">
-            @for (ingredient of category.ingredients; track ingredient.id) {
-            <ion-item><ion-label>{{ ingredient.name }}</ion-label></ion-item>
-            } @empty {
-            <ion-item>No ingredients listed.</ion-item>
-            }
-          </ion-list>
-        </ion-accordion>
-        }
-      </ion-accordion-group>
-      } @else {
-      <ion-text>No ingredient categories found.</ion-text>
-      }
-    </ion-grid>
-
-    <ion-grid class="ingredient-section" role="region" aria-labelledby="recipe-heading">
-      <ion-text class="ingredient-heading" id="recipe-heading" role="heading" aria-level="2"
-        >Ingredients by recipe</ion-text
-      >
-      @if (recipes()[0]; as firstRecipe) {
-      <ion-accordion-group [multiple]="true" [value]="[firstRecipe.id.toString()]">
-        @for (recipe of recipes(); track recipe.id) {
-        <ion-accordion [value]="recipe.id.toString()">
-          <ion-item slot="header"><ion-label>{{ recipe.name }}</ion-label></ion-item>
-          <ion-list slot="content" lines="none">
-            @for (ingredient of recipe.ingredients; track $index) {
-            <ion-item class="recipe-ingredient">
-              <ion-label class="ion-text-wrap">{{ ingredient.name }}</ion-label>
-              <ion-text class="quantity" slot="end">{{ ingredient.quantity }} {{ ingredient.unit }}</ion-text>
-            </ion-item>
-            } @empty {
-            <ion-item>No ingredients listed.</ion-item>
-            }
-          </ion-list>
-        </ion-accordion>
-        }
-      </ion-accordion-group>
-      } @else {
-      <ion-text>No recipes found.</ion-text>
-      }
-    </ion-grid>
-    }
-  </ion-grid>
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">ingredients</ion-title>
+    </ion-toolbar>
+  </ion-header>
 </ion-content>

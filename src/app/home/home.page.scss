@@ -1,27 +1,170 @@
-#container {
-  text-align: center;
+:host {
+  --forest-green: #176f4b;
+  --dark-green: #153e2c;
 
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 50%;
-  transform: translateY(-50%);
+  display: block;
+  height: 100%;
 }
 
-#container strong {
-  font-size: 20px;
-  line-height: 26px;
+.home-content {
+  --background: #eef3ef;
 }
 
-#container p {
-  font-size: 16px;
-  line-height: 22px;
+.page-container,
+.welcome,
+.categories {
+  padding: 0;
+  width: calc(100% - 40px);
+  max-width: 575px;
+  margin-left: auto;
+  margin-right: auto;
+  box-sizing: border-box;
+}
 
-  color: #8c8c8c;
+.page-container {
+  padding: 8px 0 0;
+}
 
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 34px;
+}
+
+.app {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.logo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: 52px;
+  height: 52px;
+
+  background: var(--forest-green);
+  border-radius: 19px;
+  color: #ffffff;
+
+  ion-icon {
+    font-size: 23px;
+  }
+}
+
+.Weltext {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+
+  .app-name {
+    margin: 0;
+    font-family: Georgia, serif;
+    font-size: 23px;
+    font-weight: 700;
+    color: var(--dark-green);
+  }
+}
+
+.account-name {
+  font-weight: 700;
+}
+
+.greeting-label {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: #8aa08e;
+}
+
+.bookmark-btn {
+  --background: #ffffff;
+  --background-hover: #f4f7f4;
+  --background-activated: #e7eee8;
+  --color: #153e2c;
+  --border-radius: 50%;
+  --box-shadow: none;
+  --padding-start: 0;
+  --padding-end: 0;
+
+  width: 50px;
+  height: 50px;
   margin: 0;
+
+  border: 1px solid #e2e9e2;
+  border-radius: 50%;
+
+  ion-icon {
+    font-size: 22px;
+  }
 }
 
-#container a {
-  text-decoration: none;
+.welcome {
+  margin-bottom: 28px;
+}
+
+.welcome-caption,
+.welcome-title {
+  display: block;
+  font-family: Georgia, serif;
+}
+
+.welcome-caption {
+  margin-bottom: 3px;
+  font-size: 15px;
+  color: #72947b;
+}
+
+.welcome-title {
+  font-size: clamp(28px, 5.3vw, 44px);
+  line-height: 1.1;
+  letter-spacing: -1px;
+  font-weight: 700;
+  color: var(--dark-green);
+}
+
+@media (max-width: 480px) {
+  .page-container,
+  .welcome,
+  .categories {
+    width: calc(100% - 36px);
+  }
+
+  .page-container {
+    padding-top: 12px;
+  }
+
+  .header {
+    margin-bottom: 28px;
+  }
+
+  .logo {
+    width: 46px;
+    height: 46px;
+    border-radius: 15px;
+  }
+
+  .Weltext .app-name {
+    font-size: 19px;
+  }
+
+  .greeting-label {
+    font-size: 11px;
+  }
+
+  .bookmark-btn {
+    width: 44px;
+    height: 44px;
+  }
+
+  .welcome {
+    margin-bottom: 23px;
+  }
+
+  .welcome-title {
+    font-size: clamp(27px, 7vw, 36px);
+  }
 }

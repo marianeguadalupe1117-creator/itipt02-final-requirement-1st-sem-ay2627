@@ -43,7 +43,7 @@ import { AuthService } from './auth.service';
 export class AuthPage {
   private auth = inject(AuthService);
   private nav = inject(NavController);
-  registering = input(false, { alias: 'register', transform: booleanAttribute });
+  registering = input(false, { transform: booleanAttribute });
   registered = input<string>();
   name = '';
   email = '';
@@ -80,15 +80,12 @@ export class AuthPage {
     try {
       if (this.registering()) {
         await this.auth.register({ ...details, name: this.name.trim(), confirm_password: this.confirmPassword });
-        form.resetForm();
-        this.showPassword.set(false);
-        await this.nav.navigateRoot('/login', { queryParams: { registered: 'true' }, replaceUrl: true });
       } else {
         await this.auth.login(details);
-        form.resetForm();
-        this.showPassword.set(false);
-        await this.nav.navigateRoot('/tab/home', { replaceUrl: true });
       }
+      form.resetForm();
+      this.showPassword.set(false);
+      await this.nav.navigateRoot('/tab/home', { replaceUrl: true });
     } catch (error) {
       if (error instanceof HttpErrorResponse && typeof error.error?.detail === 'string') {
         this.message.set(error.error.detail);

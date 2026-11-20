@@ -41,7 +41,8 @@ export class AuthService {
   }
 
   async register(details: RegistrationDetails): Promise<void> {
-    await firstValueFrom(this.http.post<User>('/api/auth/register', details));
+    const user = await firstValueFrom(this.http.post<User>('/api/auth/register', details));
+    this.user.set(user);
   }
 
   async logout(): Promise<void> {

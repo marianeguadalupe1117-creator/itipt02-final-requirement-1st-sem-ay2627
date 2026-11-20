@@ -1,0 +1,106 @@
+.categories {
+  display: flex;
+  flex-direction: column;
+  gap: 23px;
+
+  padding-bottom: 30px;
+}
+
+.featured-card {
+  --fade-color: #114630;
+  --background: var(--fade-color);
+  --color: #fff;
+  margin: 0;
+  border-radius: 22px;
+  box-shadow: none;
+  transition: transform 0.2s ease;
+}
+
+.featured-card::part(native) {
+  position: relative;
+  display: flex;
+  align-items: center;
+  min-height: 150px;
+  padding: 14px 16px;
+}
+
+.light-card {
+  --fade-color: #cfe3bd;
+  --color: #153e2c;
+}
+
+.featured-card:active {
+  transform: scale(0.98);
+}
+
+.featured-info {
+  position: relative;
+  z-index: 1;
+  width: 42%;
+  min-width: 0;
+  padding: 0;
+  font-family: Georgia, serif;
+}
+
+.featured-photo {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 56%;
+}
+
+.featured-photo::part(image) {
+  object-fit: cover;
+}
+
+.featured-photo::after {
+  content: '';
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 24%;
+  background: linear-gradient(to right, var(--fade-color), transparent);
+}
+
+.featured-label {
+  display: inline-block;
+  padding: 4px 9px;
+  border: 1px solid currentColor;
+  border-radius: 12px;
+  font-size: clamp(12px, 3.3vw, 17px);
+  font-weight: 700;
+}
+
+.featured-name {
+  --color: inherit;
+  margin: 7px 0 0;
+  font-size: clamp(17px, 4vw, 26px);
+  font-weight: 700;
+  line-height: 1.05;
+}
+
+.featured-caption {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin: 8px 0 0;
+  font-size: 12px;
+}
+
+.featured-info ion-icon {
+  flex-shrink: 0;
+}
+
+@media (max-width: 480px) {
+  .categories {
+    gap: 18px;
+  }
+
+  .featured-card {
+    border-radius: 20px;
+  }
+
+  .featured-card::part(native) {
+    min-height: 135px;
+  }
+}

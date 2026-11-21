@@ -11,7 +11,7 @@
   </ion-avatar>
   <ion-card class="post-bubble">
     <ion-row class="post-header">
-      <ion-text class="author">{{ recipePost.author }}</ion-text>
+      <div class="author">{{ recipePost.author }}</div>
       <ng-content />
     </ion-row>
     <ion-row class="recipe-cover">
@@ -21,7 +21,7 @@
     <ion-accordion-group class="post-text" [value]="recipeOpen() ? 'recipe' : null">
       <ion-accordion value="recipe">
         <ion-item slot="header" lines="none"><ion-label>Read recipe</ion-label></ion-item>
-        <ion-text slot="content" class="recipe-text">{{ recipePost.recipe }}</ion-text>
+        <div slot="content" class="recipe-text">{{ recipePost.recipe }}</div>
       </ion-accordion>
     </ion-accordion-group>
   </ion-card>

@@ -16,11 +16,9 @@ import {
   IonInput,
   IonModal,
   IonNote,
-  IonRow,
   IonSearchbar,
   IonSegment,
   IonSegmentButton,
-  IonText,
   IonTextarea,
   IonToast,
   IonTitle,
@@ -34,7 +32,6 @@ import {
   ellipsisHorizontal,
   newspaperOutline,
   personOutline,
-  refreshOutline,
 } from 'ionicons/icons';
 import { firstValueFrom } from 'rxjs';
 
@@ -60,11 +57,9 @@ import type { RecipePost } from './recipe-post';
     IonInput,
     IonModal,
     IonNote,
-    IonRow,
     IonSearchbar,
     IonSegment,
     IonSegmentButton,
-    IonText,
     IonTextarea,
     IonToast,
     IonTitle,
@@ -111,7 +106,6 @@ export class PostsPage implements OnDestroy {
       ellipsisHorizontal,
       newspaperOutline,
       personOutline,
-      refreshOutline,
     });
   }
 
@@ -119,7 +113,7 @@ export class PostsPage implements OnDestroy {
     void this.loadPosts();
   }
 
-  async loadPosts(): Promise<void> {
+  private async loadPosts(): Promise<void> {
     this.loading.set(true);
     this.feedError.set(false);
     try {

@@ -53,24 +53,20 @@
   margin-top: 24px;
 }
 
-.feed-controls,
 .success-message {
   display: flex;
   align-items: center;
   gap: 10px;
 }
 
-.feed-controls {
-  justify-content: space-between;
-  margin-bottom: 12px;
-}
-
 #feed-heading {
+  margin: 0 0 12px;
   font-family: Georgia, serif;
   font-size: 1.4rem;
+  font-weight: inherit;
+  line-height: inherit;
 }
 
-.refresh-button,
 .empty-feed ion-button {
   --background: var(--green);
   --box-shadow: none;
@@ -78,7 +74,6 @@
   --color: #fff;
 }
 
-.refresh-button,
 .post-menu {
   --padding-start: 0;
   --padding-end: 0;
@@ -117,7 +112,7 @@
 }
 
 .success-message {
-  margin-top: 12px;
+  margin: 12px 0 0;
 }
 
 .empty-feed {
@@ -127,7 +122,6 @@
   box-shadow: none;
 }
 
-.empty-feed ion-text {
-  display: block;
-  margin-bottom: 12px;
+.empty-feed p {
+  margin: 0 0 12px;
 }

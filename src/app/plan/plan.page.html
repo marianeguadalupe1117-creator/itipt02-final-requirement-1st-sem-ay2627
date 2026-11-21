@@ -2,8 +2,8 @@
   <ion-grid class="plan-container" role="main">
     <ion-row class="page-header">
       <ion-col class="plan-title">
-        <ion-text class="app-label">PREPMASTER</ion-text>
-        <ion-text class="page-title" role="heading" aria-level="1">Meal Planner</ion-text>
+        <div class="app-label">PREPMASTER</div>
+        <h1 class="page-title">Meal Planner</h1>
       </ion-col>
       <ion-avatar class="header-icon">
         <ion-icon name="calendar-outline" aria-hidden="true"></ion-icon>
@@ -16,7 +16,7 @@
           <ion-button fill="clear" (click)="changeMonth(-1)" aria-label="Previous month">
             <ion-icon slot="icon-only" name="chevron-back-outline"></ion-icon>
           </ion-button>
-          <ion-text class="month-title" role="heading" aria-level="2">{{ monthLabel() }}</ion-text>
+          <h2 class="month-title">{{ monthLabel() }}</h2>
           <ion-button fill="clear" (click)="changeMonth(1)" aria-label="Next month">
             <ion-icon slot="icon-only" name="chevron-forward-outline"></ion-icon>
           </ion-button>
@@ -24,7 +24,7 @@
 
         <ion-grid class="calendar-grid">
           @for (weekday of weekDays; track weekday) {
-          <ion-text class="weekday">{{ weekday }}</ion-text>
+          <div class="weekday">{{ weekday }}</div>
           } @for (day of calendarDays(); track $index) { @if (day) { @let date = day.toDateString(); @let selected =
           date === selectedDate().toDateString();
           <ion-button
@@ -37,11 +37,11 @@
             (click)="selectDay(day)"
           >
             {{ day.getDate() }} @if (hasMeals(day)) {
-            <ion-text class="meal-dot" aria-hidden="true"></ion-text>
+            <div class="meal-dot" aria-hidden="true"></div>
             }
           </ion-button>
           } @else {
-          <ion-text aria-hidden="true"></ion-text>
+          <div aria-hidden="true"></div>
           } }
         </ion-grid>
       </ion-card-content>
@@ -49,14 +49,14 @@
 
     <ion-grid class="meal-section" role="region" aria-labelledby="meals-heading">
       <ion-row class="section-header">
-        <ion-text class="meals-title" id="meals-heading" role="heading" aria-level="2">Planned Meals</ion-text>
-        <ion-text class="selected-date">{{ dateLabel() }}</ion-text>
+        <h2 class="meals-title" id="meals-heading">Planned Meals</h2>
+        <div class="selected-date">{{ dateLabel() }}</div>
       </ion-row>
 
       @for (meal of selectedMeals(); track meal) {
       <ion-item lines="none" class="meal-item">
         <ion-label>
-          <ion-text class="meal-name" role="heading" aria-level="3">{{ meal.name }}</ion-text>
+          <h3 class="meal-name">{{ meal.name }}</h3>
         </ion-label>
         <div slot="end" class="meal-actions">
           <ion-button
@@ -75,10 +75,10 @@
       } @empty {
       <ion-row class="empty-meals">
         <ion-icon name="calendar-outline" aria-hidden="true"></ion-icon>
-        <ion-text>No meals planned for this day.</ion-text>
+        <p>No meals planned for this day.</p>
       </ion-row>
       } @if (editingMeal(); as meal) {
-      <ion-text role="status">Editing {{ meal.name }}</ion-text>
+      <p class="ion-no-margin" role="status">Editing {{ meal.name }}</p>
       }
       <ion-grid class="add-meal">
         <ion-select
@@ -114,9 +114,9 @@
         }
       </ion-grid>
       @if (loadError()) {
-      <ion-text role="alert">{{ loadError() }}</ion-text>
+      <p class="ion-no-margin" role="alert">{{ loadError() }}</p>
       } @else if (categoryId() && !loadingDishes() && dishes().length === 0) {
-      <ion-text>No dishes in this category.</ion-text>
+      <p class="ion-no-margin">No dishes in this category.</p>
       }
     </ion-grid>
   </ion-grid>

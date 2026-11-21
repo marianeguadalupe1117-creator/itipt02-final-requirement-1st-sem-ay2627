@@ -16,7 +16,6 @@ import {
   IonRow,
   IonSelect,
   IonSelectOption,
-  IonText,
   IonToast,
 } from '@ionic/angular';
 import { addIcons } from 'ionicons';
@@ -60,7 +59,6 @@ interface PlannedMeal {
     IonRow,
     IonSelect,
     IonSelectOption,
-    IonText,
     IonToast,
   ],
 })

@@ -26,27 +26,15 @@
     </ion-segment>
 
     @if (notice()) {
-    <ion-text class="success-message" role="status">
+    <p class="success-message" role="status">
       <ion-icon name="checkmark-circle-outline" aria-hidden="true"></ion-icon>
       {{ notice() }}
-    </ion-text>
+    </p>
     } @if (actionError()) {
-    <ion-text role="alert">{{ actionError() }}</ion-text>
+    <p class="ion-no-margin" role="alert">{{ actionError() }}</p>
     }
     <ion-grid class="feed-section" role="region" aria-labelledby="feed-heading">
-      <ion-row class="feed-controls">
-        <ion-text id="feed-heading" role="heading" aria-level="2"
-          >{{ tab() === 'feed' ? 'Latest recipes' : 'My recipes' }}</ion-text
-        >
-        <ion-button
-          class="refresh-button"
-          aria-label="Refresh recipes"
-          (click)="loadPosts()"
-          [disabled]="loading() || posting() || updatingPost()"
-        >
-          <ion-icon slot="icon-only" name="refresh-outline" aria-hidden="true"></ion-icon>
-        </ion-button>
-      </ion-row>
+      <h2 id="feed-heading">{{ tab() === 'feed' ? 'Latest recipes' : 'My recipes' }}</h2>
       @if (hasPostsInTab()) {
       <ion-searchbar
         class="search-box"
@@ -56,9 +44,9 @@
         (ionInput)="searchPosts($event.detail.value ?? '')"
       />
       } @if (loading()) {
-      <ion-text class="feed-message" role="status">Loading recipes…</ion-text>
+      <p class="feed-message ion-no-margin" role="status">Loading recipes…</p>
       } @else if (feedError()) {
-      <ion-text class="feed-message" role="alert">Could not load the recipe feed. Tap refresh to try again.</ion-text>
+      <p class="feed-message ion-no-margin" role="alert">Could not load the recipe feed.</p>
       }
       <ion-grid class="post-feed">
         @for (post of visiblePosts(); track post.id) {
@@ -83,12 +71,10 @@
       @if (!loading() && !feedError() && visiblePosts().length === 0) {
       <ion-card class="empty-feed">
         @if (hasPostsInTab()) {
-        <ion-text>No recipes match your search.</ion-text>
+        <p>No recipes match your search.</p>
         <ion-button (click)="searchPosts('')">Clear search</ion-button>
         } @else {
-        <ion-text
-          >{{ tab() === 'profile' ? 'You haven’t posted a recipe yet.' : 'No recipes have been posted yet.' }}</ion-text
-        >
+        <p>{{ tab() === 'profile' ? 'You haven’t posted a recipe yet.' : 'No recipes have been posted yet.' }}</p>
         <ion-button (click)="openEditor()">Share a recipe</ion-button>
         }
       </ion-card>
@@ -126,7 +112,7 @@
           } @else {
           <ion-icon name="camera-outline" aria-hidden="true"></ion-icon>
           }
-          <ion-text>{{ photoPreview() || editing() ? 'Change dish photo' : 'Add a dish photo' }}</ion-text>
+          <div>{{ photoPreview() || editing() ? 'Change dish photo' : 'Add a dish photo' }}</div>
           <ion-note>JPG, PNG, or WebP up to 5 MB</ion-note>
         </ion-button>
         <ion-input
@@ -149,7 +135,7 @@
           required
         />
         @if (postError()) {
-        <ion-text class="form-error" role="alert">{{ postError() }}</ion-text>
+        <p class="form-error ion-no-margin" role="alert">{{ postError() }}</p>
         }
       </ion-grid>
     </ion-content>

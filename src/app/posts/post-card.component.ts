@@ -10,7 +10,6 @@ import {
   IonItem,
   IonLabel,
   IonRow,
-  IonText,
 } from '@ionic/angular';
 import { addIcons } from 'ionicons';
 import { personOutline } from 'ionicons/icons';
@@ -32,7 +31,6 @@ import type { RecipePost } from './recipe-post';
     IonItem,
     IonLabel,
     IonRow,
-    IonText,
   ],
 })
 export class PostCardComponent {

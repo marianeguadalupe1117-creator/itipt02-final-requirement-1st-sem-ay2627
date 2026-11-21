@@ -113,12 +113,13 @@
 }
 
 .welcome-caption {
-  margin-bottom: 3px;
+  margin: 0 0 3px;
   font-size: 15px;
   color: #72947b;
 }
 
 .welcome-title {
+  margin: 0;
   font-size: clamp(28px, 5.3vw, 44px);
   line-height: 1.1;
   letter-spacing: -1px;

@@ -12,7 +12,6 @@ import {
   IonList,
   IonRouterLink,
   IonRow,
-  IonText,
   IonToast,
 } from '@ionic/angular';
 import { addIcons } from 'ionicons';
@@ -54,7 +53,6 @@ interface DishDetails {
     IonList,
     IonRouterLink,
     IonRow,
-    IonText,
     IonToast,
     RouterLink,
   ],

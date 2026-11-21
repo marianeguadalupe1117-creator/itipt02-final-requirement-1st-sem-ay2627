@@ -6,8 +6,8 @@
           <ion-icon name="leaf-outline" aria-hidden="true"></ion-icon>
         </ion-avatar>
         <ion-row class="Weltext">
-          <ion-text class="greeting-label">WELCOME TO</ion-text>
-          <ion-text class="app-name">PREPMASTER</ion-text>
+          <div class="greeting-label">WELCOME TO</div>
+          <div class="app-name">PREPMASTER</div>
         </ion-row>
       </ion-row>
       @if (user(); as account) {
@@ -28,15 +28,15 @@
   </ion-grid>
 
   <ion-grid class="welcome">
-    <ion-text class="welcome-caption">Fresh recipes for a delicious meal</ion-text>
-    <ion-text class="welcome-title" role="heading" aria-level="1">What are we cooking today?</ion-text>
+    <p class="welcome-caption">Fresh recipes for a delicious meal</p>
+    <h1 class="welcome-title">What are we cooking today?</h1>
   </ion-grid>
 
   <ion-grid class="categories">
     @if (loading()) {
-    <ion-text role="status">Loading categories…</ion-text>
+    <p class="ion-no-margin" role="status">Loading categories…</p>
     } @else if (failed()) {
-    <ion-text role="alert">Could not load dish categories.</ion-text>
+    <p class="ion-no-margin" role="alert">Could not load dish categories.</p>
     } @else { @for (category of categories(); track category.id) {
     <ion-card
       class="category-card featured-card"
@@ -45,11 +45,11 @@
       [class.light-card]="$odd"
     >
       <ion-card-content class="featured-info">
-        <ion-text class="featured-label">{{ category.name }}</ion-text>
-        <ion-text class="featured-caption">
+        <div class="featured-label">{{ category.name }}</div>
+        <div class="featured-caption">
           <ion-icon name="time-outline" aria-hidden="true"></ion-icon>
           Ready for a meal?
-        </ion-text>
+        </div>
         @if (featuredDishes[category.name]; as dish) {
         <ion-card-title class="featured-name" role="heading" aria-level="2">{{ dish }}</ion-card-title>
         }
@@ -59,7 +59,7 @@
       }
     </ion-card>
     } @empty {
-    <ion-text>No dish categories found.</ion-text>
+    <p class="ion-no-margin">No dish categories found.</p>
     } }
   </ion-grid>
 </ion-content>

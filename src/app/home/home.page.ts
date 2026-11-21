@@ -19,7 +19,6 @@ import {
   IonPopover,
   IonRouterLink,
   IonRow,
-  IonText,
   NavController,
 } from '@ionic/angular';
 import { addIcons } from 'ionicons';
@@ -53,7 +52,6 @@ interface DishCategory {
     IonPopover,
     IonRouterLink,
     IonRow,
-    IonText,
     RouterLink,
   ],
 })

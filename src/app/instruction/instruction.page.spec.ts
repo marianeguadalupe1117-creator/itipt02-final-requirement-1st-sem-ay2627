@@ -29,7 +29,7 @@ describe('InstructionPage', () => {
     expect(page.querySelector('.dish-title')?.textContent).toContain('Chicken Adobo');
     expect(page.querySelector('.ingredients-list ion-item')?.textContent).toContain('1 kg');
     expect(page.querySelector('.steps-list ion-item')?.textContent).toContain('Marinate the chicken.');
-    expect(page.querySelector('.steps-list ion-text')?.textContent).toBe('1.');
+    expect(page.querySelector('.recipe-step [slot="start"]')?.textContent).toBe('1.');
 
     const saveButton = page.querySelector<HTMLButtonElement>('ion-button[aria-label="Save dish"]');
     saveButton?.click();

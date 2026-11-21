@@ -7,8 +7,7 @@
 }
 
 .featured-card {
-  --fade-color: #114630;
-  --background: var(--fade-color);
+  --background: #114630;
   --color: #fff;
   margin: 0;
   border-radius: 22px;
@@ -25,7 +24,7 @@
 }
 
 .light-card {
-  --fade-color: #cfe3bd;
+  --background: #cfe3bd;
   --color: #153e2c;
 }
 
@@ -48,18 +47,11 @@
   right: 0;
   bottom: 0;
   width: 56%;
+  mask-image: linear-gradient(to right, transparent 1%, #000 24%);
 }
 
 .featured-photo::part(image) {
   object-fit: cover;
-}
-
-.featured-photo::after {
-  content: '';
-  position: absolute;
-  inset: 0 auto 0 0;
-  width: 24%;
-  background: linear-gradient(to right, var(--fade-color), transparent);
 }
 
 .featured-label {

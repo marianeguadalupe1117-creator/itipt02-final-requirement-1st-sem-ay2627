@@ -1,13 +1,42 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>recipes</ion-title>
-  </ion-toolbar>
-</ion-header>
+<ion-content [fullscreen]="true" class="recipes-content">
+  <ion-grid class="recipes-container">
+    <ion-row class="recipe-banner">
+      @if (categoryImage(); as image) {
+      <img class="recipe-banner-image" [src]="image" alt="" (error)="categoryImage.set(null)" />
+      }
+      <h1 class="recipe-title">{{ categoryName() || 'Recipes' }}</h1>
+    </ion-row>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">recipes</ion-title>
-    </ion-toolbar>
-  </ion-header>
+    <ion-grid class="recipes-body">
+      @if (loading()) {
+      <p class="ion-no-margin" role="status">Loading dishes…</p>
+      } @else if (failed()) {
+      <p class="ion-no-margin" role="alert">Could not load dishes for this category.</p>
+      <ion-button fill="clear" routerLink="/tab/home">Back to categories</ion-button>
+      } @else {
+      <ion-searchbar
+        placeholder="Search dishes"
+        show-clear-button="focus"
+        class="recipe-search"
+        (ionInput)="search.set($event.detail.value ?? '')"
+      ></ion-searchbar>
+
+      <ion-list lines="none" class="recipe-list">
+        @for (dish of matchingDishes(); track dish.id) {
+        <ion-item button detail="false" class="recipe-item" [routerLink]="['/tab/instruction', dish.id]">
+          <ion-label>
+            <h2 class="dish-name">{{ dish.name }}</h2>
+          </ion-label>
+          <div slot="end" class="open-action">
+            Open
+            <ion-icon name="arrow-forward-outline" aria-hidden="true"></ion-icon>
+          </div>
+        </ion-item>
+        } @empty {
+        <p class="ion-no-margin">{{ search() ? 'No matching dishes.' : 'No dishes in this category.' }}</p>
+        }
+      </ion-list>
+      }
+    </ion-grid>
+  </ion-grid>
 </ion-content>

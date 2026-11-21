@@ -11,7 +11,6 @@ import {
   IonItem,
   IonLabel,
   IonList,
-  IonText,
   IonTitle,
   IonToolbar,
 } from '@ionic/angular';
@@ -58,7 +57,6 @@ interface IngredientsResponse {
     IonItem,
     IonLabel,
     IonList,
-    IonText,
     IonTitle,
     IonToolbar,
   ],

@@ -13,7 +13,6 @@ import {
   IonNote,
   IonRouterLink,
   IonRow,
-  IonText,
   NavController,
 } from '@ionic/angular';
 import { addIcons } from 'ionicons';
@@ -36,7 +35,6 @@ import { AuthService } from './auth.service';
     IonNote,
     IonRouterLink,
     IonRow,
-    IonText,
     RouterLink,
   ],
 })

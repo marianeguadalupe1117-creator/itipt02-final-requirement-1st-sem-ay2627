@@ -14,9 +14,10 @@
 
 .ingredient-heading {
   display: block;
-  margin-bottom: 12px;
+  margin: 0 0 12px;
   font-size: 1.25rem;
   font-weight: 650;
+  line-height: inherit;
 }
 
 ion-accordion > ion-item[slot='header'] {

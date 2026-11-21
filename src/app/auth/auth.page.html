@@ -1,24 +1,24 @@
 <ion-content class="auth-content">
   <ion-grid class="auth-screen" role="main">
     <ion-grid class="auth-garden" aria-hidden="true">
-      <ion-text class="garden-sprout sprout-left" />
-      <ion-text class="garden-sprout sprout-inner-left" />
-      <ion-text class="garden-sprout sprout-inner-right" />
-      <ion-text class="garden-sprout sprout-right" />
+      <div class="garden-sprout sprout-left"></div>
+      <div class="garden-sprout sprout-inner-left"></div>
+      <div class="garden-sprout sprout-inner-right"></div>
+      <div class="garden-sprout sprout-right"></div>
     </ion-grid>
 
     <ion-row class="auth-brand">
       <ion-avatar class="brand-icon">
         <ion-icon name="leaf-outline" aria-hidden="true" />
       </ion-avatar>
-      <ion-text class="brand-name">PREPMASTER</ion-text>
+      <div class="brand-name">PREPMASTER</div>
     </ion-row>
 
     <ion-grid class="auth-form">
-      <ion-text class="auth-title" role="heading" aria-level="1">{{ registering() ? 'Sign Up' : 'Log In' }}</ion-text>
+      <h1 class="auth-title">{{ registering() ? 'Sign Up' : 'Log In' }}</h1>
 
       @if (registered() === 'true') {
-      <ion-text class="form-message" role="status">Account created. You can now log in.</ion-text>
+      <p class="form-message ion-no-margin" role="status">Account created. You can now log in.</p>
       }
 
       <ion-grid class="auth-fields" ngForm #form="ngForm">
@@ -82,19 +82,19 @@
         />
         <ion-note id="password-help">Use 8 to 48 characters.</ion-note>
         } @if (message()) {
-        <ion-text class="form-message form-error" role="alert">{{ message() }}</ion-text>
+        <p class="form-message form-error ion-no-margin" role="alert">{{ message() }}</p>
         }
         <ion-button class="submit-button" expand="block" [disabled]="submitting()" (click)="submit(form)">
           {{ registering() ? 'Create account' : 'Log in' }}
         </ion-button>
       </ion-grid>
 
-      <ion-text class="auth-switch">
+      <div class="auth-switch">
         @if (registering()) { Already have an account?
         <ion-button fill="clear" routerLink="/login">Log in</ion-button> } @else { New to PrepMaster?
         <ion-button fill="clear" routerLink="/register">Sign up</ion-button>
         }
-      </ion-text>
+      </div>
     </ion-grid>
   </ion-grid>
 </ion-content>

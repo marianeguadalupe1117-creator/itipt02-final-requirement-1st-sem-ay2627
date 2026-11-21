@@ -1,7 +1,7 @@
 <ion-content class="instruction-content">
   <ion-grid class="recipe" role="main">
     @if (loading()) {
-    <ion-text role="status">Loading recipe…</ion-text>
+    <p class="ion-no-margin" role="status">Loading recipe…</p>
     } @else if (dish(); as recipe) {
     <ion-row class="recipe-actions">
       <ion-button
@@ -22,47 +22,51 @@
       </ion-button>
     </ion-row>
     @if (saveFailed()) {
-    <ion-text role="alert">Could not update this bookmark. Try again.</ion-text>
+    <p class="ion-no-margin" role="alert">Could not update this bookmark. Try again.</p>
     }
 
-    <ion-row class="recipe-hero">
-      @if (recipe.image_url) {
-      <ion-img [src]="recipe.image_url" alt="" (ionError)="$any($event.target).hidden = true" />
-      }
-      <ion-text class="dish-title" role="heading" aria-level="1">{{ recipe.name }}</ion-text>
-    </ion-row>
+    <div class="recipe-card">
+      <ion-row class="recipe-hero">
+        <div class="recipe-photo">
+          @if (recipe.image_url) {
+          <ion-img [src]="recipe.image_url" alt="" (ionError)="$any($event.target).hidden = true" />
+          }
+        </div>
+        <h1 class="dish-title">{{ recipe.name }}</h1>
+      </ion-row>
 
-    <ion-grid class="recipe-section" role="region" aria-labelledby="ingredients-heading">
-      <ion-text class="section-title" id="ingredients-heading" role="heading" aria-level="2">Ingredients</ion-text>
-      <ion-list class="ingredients-list" role="list">
-        @for (ingredient of recipe.ingredients; track $index) {
-        <ion-item role="listitem">
-          <ion-label class="ion-text-wrap">{{ ingredient.name }}</ion-label>
-          <ion-text slot="end" class="quantity">{{ ingredient.quantity }} {{ ingredient.unit }}</ion-text>
-        </ion-item>
-        } @empty {
-        <ion-item role="listitem">No ingredients listed for this dish.</ion-item>
-        }
-      </ion-list>
-    </ion-grid>
+      <ion-grid class="recipe-section" role="region" aria-labelledby="ingredients-heading">
+        <h2 class="section-title" id="ingredients-heading">Ingredients</h2>
+        <ion-list class="ingredients-list" role="list">
+          @for (ingredient of recipe.ingredients; track $index) {
+          <ion-item role="listitem">
+            <ion-label class="ion-text-wrap">{{ ingredient.name }}</ion-label>
+            <div slot="end" class="quantity">{{ ingredient.quantity }} {{ ingredient.unit }}</div>
+          </ion-item>
+          } @empty {
+          <ion-item role="listitem">No ingredients listed for this dish.</ion-item>
+          }
+        </ion-list>
+      </ion-grid>
 
-    <ion-grid class="recipe-section" role="region" aria-labelledby="steps-heading">
-      <ion-text class="section-title" id="steps-heading" role="heading" aria-level="2">How to cook</ion-text>
-      @if (recipe.steps.length > 0) {
-      <ion-list class="steps-list" lines="none" role="list">
-        @for (step of recipe.steps; track step.id) {
-        <ion-item role="listitem" class="recipe-step">
-          <ion-text slot="start">{{ step.number }}.</ion-text>
-          <ion-label class="ion-text-wrap">{{ step.text }}</ion-label>
-        </ion-item>
+      <ion-grid class="recipe-section" role="region" aria-labelledby="steps-heading">
+        <h2 class="section-title" id="steps-heading">How to cook</h2>
+        @if (recipe.steps.length > 0) {
+        <ion-list class="steps-list" lines="none" role="list">
+          @for (step of recipe.steps; track step.id) {
+          <ion-item role="listitem" class="recipe-step">
+            <div slot="start">{{ step.number }}.</div>
+            <ion-label class="ion-text-wrap">{{ step.text }}</ion-label>
+          </ion-item>
+          }
+        </ion-list>
+        } @else {
+        <p class="ion-no-margin">No cooking instructions listed for this dish.</p>
         }
-      </ion-list>
-      } @else {
-      <ion-text>No cooking instructions listed for this dish.</ion-text>
-      }
-    </ion-grid>
+      </ion-grid>
+    </div>
     } @else {
-    <ion-text role="alert">Could not load this recipe.</ion-text>
+    <p class="ion-no-margin" role="alert">Could not load this recipe.</p>
     <ion-button class="back-link" fill="clear" routerLink="/tab/home">Back to categories</ion-button>
     }
   </ion-grid>

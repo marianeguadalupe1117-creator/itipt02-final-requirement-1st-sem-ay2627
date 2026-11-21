@@ -1,13 +1,49 @@
-<ion-header [translucent]="true">
+<ion-header>
   <ion-toolbar>
-    <ion-title>saved</ion-title>
+    <ion-title>Saved</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">saved</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content>
+  @if (loading()) {
+  <p class="saved-message ion-padding ion-no-margin" role="status">Loading saved dishes…</p>
+  } @else if (failed()) {
+  <p class="saved-message ion-padding ion-no-margin" role="alert">Could not load saved dishes.</p>
+  } @else if (dishes().length === 0) {
+  <p class="saved-message ion-padding ion-no-margin">No saved dishes yet.</p>
+  } @else {
+  <ion-grid class="saved-cards">
+    @for (dish of dishes(); track dish.id) {
+    <ion-card
+      class="saved-card"
+      [button]="true"
+      [routerLink]="['/tab/instruction', dish.id]"
+      [queryParams]="{ fromSaved: 'true' }"
+    >
+      @if (dish.image_url) {
+      <ion-img [src]="dish.image_url" alt="" (ionError)="$any($event.target).hidden = true" />
+      }
+      <ion-card-content class="card-content">
+        <ion-card-title class="saved-name" role="heading" aria-level="2">{{ dish.name }}</ion-card-title>
+        <div class="card-action">
+          View recipe
+          <div aria-hidden="true">›</div>
+        </div>
+      </ion-card-content>
+    </ion-card>
+    }
+  </ion-grid>
+  }
+  <ion-grid class="saved-posts" role="region" aria-labelledby="saved-posts-title">
+    <h2 class="saved-posts-title" id="saved-posts-title">Saved posts</h2>
+    @if (postsLoading()) {
+    <p class="ion-no-margin" role="status">Loading saved posts…</p>
+    } @else if (postsFailed()) {
+    <p class="ion-no-margin" role="alert">Could not load saved posts.</p>
+    } @else { @for (post of posts(); track post.id) {
+    <app-post-card [post]="post" [ownPost]="post.author_id === user()?.id" [recipeOpen]="true" />
+    } @empty {
+    <p class="ion-no-margin">No saved posts yet.</p>
+    } }
+  </ion-grid>
 </ion-content>

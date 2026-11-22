@@ -86,6 +86,7 @@ export class PostsPage implements OnDestroy {
   feedError = signal(false);
   notice = signal('');
   showSavedToast = signal(false);
+  showRemovedToast = signal(false);
   actionError = signal('');
   updatingPost = signal(false);
 
@@ -188,7 +189,7 @@ export class PostsPage implements OnDestroy {
       if (post.saved) {
         await firstValueFrom(this.http.delete(url));
         post.saved = false;
-        this.notice.set('Recipe removed from Saved.');
+        this.showRemovedToast.set(true);
       } else {
         await firstValueFrom(this.http.put(url, null));
         post.saved = true;

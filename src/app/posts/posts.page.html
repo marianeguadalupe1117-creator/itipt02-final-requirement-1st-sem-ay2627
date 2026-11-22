@@ -149,3 +149,10 @@
   [duration]="2000"
   (didDismiss)="showSavedToast.set(false)"
 />
+<ion-toast
+  color="success"
+  message="save removed"
+  [isOpen]="showRemovedToast()"
+  [duration]="2000"
+  (didDismiss)="showRemovedToast.set(false)"
+/>

@@ -36,14 +36,33 @@
   }
   <ion-grid class="saved-posts" role="region" aria-labelledby="saved-posts-title">
     <h2 class="saved-posts-title" id="saved-posts-title">Saved posts</h2>
-    @if (postsLoading()) {
+    @if (removeFailed()) {
+    <p class="ion-no-margin" role="alert">Could not remove the saved post. Try again.</p>
+    } @if (postsLoading()) {
     <p class="ion-no-margin" role="status">Loading saved posts…</p>
     } @else if (postsFailed()) {
     <p class="ion-no-margin" role="alert">Could not load saved posts.</p>
     } @else { @for (post of posts(); track post.id) {
-    <app-post-card [post]="post" [ownPost]="post.author_id === user()?.id" [recipeOpen]="true" />
+    <app-post-card [post]="post" [ownPost]="post.author_id === user()?.id" [recipeOpen]="true">
+      <ion-button
+        fill="clear"
+        class="post-menu"
+        [attr.aria-label]="'Options for ' + post.dish_name"
+        [disabled]="removingPost()"
+        (click)="openPostMenu(post)"
+      >
+        <ion-icon slot="icon-only" name="ellipsis-horizontal" aria-hidden="true"></ion-icon>
+      </ion-button>
+    </app-post-card>
     } @empty {
     <p class="ion-no-margin">No saved posts yet.</p>
     } }
   </ion-grid>
+  <ion-toast
+    color="success"
+    message="save removed"
+    [isOpen]="showRemovedToast()"
+    [duration]="2000"
+    (didDismiss)="showRemovedToast.set(false)"
+  />
 </ion-content>

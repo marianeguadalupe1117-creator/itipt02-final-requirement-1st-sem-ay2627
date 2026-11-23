@@ -1,4 +1,3 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, effect, inject, input, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import {
@@ -16,6 +15,8 @@ import {
 } from '@ionic/angular';
 import { addIcons } from 'ionicons';
 import { arrowBackOutline, bookmark, bookmarkOutline } from 'ionicons/icons';
+
+import { ApiService } from '../api.service';
 
 interface Ingredient {
   name: string;
@@ -58,7 +59,7 @@ interface DishDetails {
   ],
 })
 export class InstructionPage {
-  private http = inject(HttpClient);
+  private api = inject(ApiService);
   private refresh = signal(0);
 
   dishId = input.required<string>();
@@ -80,7 +81,7 @@ export class InstructionPage {
       this.dish.set(null);
       this.saveFailed.set(false);
 
-      const request = this.http.get<DishDetails>(`/api/dishes/${encodeURIComponent(dishId)}`).subscribe({
+      const request = this.api.getDish<DishDetails>(dishId).subscribe({
         next: (dish) => {
           this.dish.set(dish);
           this.saved.set(dish.saved);
@@ -102,8 +103,7 @@ export class InstructionPage {
   toggleSaved(): void {
     const dishId = this.dishId();
     const shouldSave = !this.saved();
-    const url = `/api/saved-dishes/${encodeURIComponent(dishId)}`;
-    const request = shouldSave ? this.http.put(url, null) : this.http.delete(url);
+    const request = shouldSave ? this.api.saveDish(dishId) : this.api.removeSavedDish(dishId);
 
     this.saving.set(true);
     this.saveFailed.set(false);

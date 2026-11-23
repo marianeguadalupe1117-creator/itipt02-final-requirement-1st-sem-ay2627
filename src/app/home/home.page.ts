@@ -1,4 +1,3 @@
-import { HttpClient } from '@angular/common/http';
 import type { OnInit } from '@angular/core';
 import { Component, inject, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
@@ -24,6 +23,7 @@ import {
 import { addIcons } from 'ionicons';
 import { leafOutline, personOutline, timeOutline } from 'ionicons/icons';
 
+import { ApiService } from '../api.service';
 import { AuthService } from '../auth/auth.service';
 
 interface DishCategory {
@@ -56,7 +56,7 @@ interface DishCategory {
   ],
 })
 export class HomePage implements OnInit {
-  private http = inject(HttpClient);
+  private api = inject(ApiService);
   private alerts = inject(AlertController);
   private nav = inject(NavController);
 
@@ -81,7 +81,7 @@ export class HomePage implements OnInit {
   }
 
   ngOnInit(): void {
-    this.http.get<DishCategory[]>('/api/dish-categories').subscribe({
+    this.api.getDishCategories<DishCategory>().subscribe({
       next: (categories) => {
         this.categories.set(categories);
         this.loading.set(false);

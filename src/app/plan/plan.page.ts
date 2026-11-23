@@ -1,4 +1,3 @@
-import { HttpClient } from '@angular/common/http';
 import type { OnInit } from '@angular/core';
 import { Component, computed, inject, signal } from '@angular/core';
 import {
@@ -28,6 +27,8 @@ import {
   trashOutline,
 } from 'ionicons/icons';
 import type { Subscription } from 'rxjs';
+
+import { ApiService } from '../api.service';
 
 interface DishOption {
   id: number;
@@ -63,7 +64,7 @@ interface PlannedMeal {
   ],
 })
 export class PlanPage implements OnInit {
-  private http = inject(HttpClient);
+  private api = inject(ApiService);
   private alerts = inject(AlertController);
   private dishRequest?: Subscription;
 
@@ -114,7 +115,7 @@ export class PlanPage implements OnInit {
   }
 
   ngOnInit(): void {
-    this.http.get<DishOption[]>('/api/dish-categories').subscribe({
+    this.api.getDishCategories<DishOption>().subscribe({
       next: (categories) => this.categories.set(categories),
       error: () => this.loadError.set('Could not load categories.'),
     });
@@ -129,7 +130,7 @@ export class PlanPage implements OnInit {
     this.loadingDishes.set(Boolean(categoryId));
     if (!categoryId) return;
 
-    this.dishRequest = this.http.get<{ dishes: DishOption[] }>(`/api/dish-categories/${categoryId}/dishes`).subscribe({
+    this.dishRequest = this.api.getCategoryDishes<{ dishes: DishOption[] }>(categoryId).subscribe({
       next: (data) => {
         this.dishes.set(data.dishes);
         if (data.dishes.some((dish) => dish.id.toString() === selectedDishId)) {

@@ -38,6 +38,7 @@ import { AuthService } from './auth.service';
     RouterLink,
   ],
 })
+
 export class AuthPage {
   private auth = inject(AuthService);
   private nav = inject(NavController);

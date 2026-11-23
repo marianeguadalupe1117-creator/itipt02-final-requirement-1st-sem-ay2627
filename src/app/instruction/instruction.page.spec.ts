@@ -15,7 +15,7 @@ describe('InstructionPage', () => {
     fixture.detectChanges();
 
     const http = TestBed.inject(HttpTestingController);
-    http.expectOne('/api/dishes/1').flush({
+    http.expectOne('http://localhost:8000/api/dishes/1').flush({
       name: 'Chicken Adobo',
       category_id: 1,
       image_url: '',
@@ -34,7 +34,7 @@ describe('InstructionPage', () => {
     const saveButton = page.querySelector<HTMLButtonElement>('ion-button[aria-label="Save dish"]');
     saveButton?.click();
     expect(fixture.componentInstance.showSavedToast()).toBe(false);
-    http.expectOne({ method: 'PUT', url: '/api/saved-dishes/1' }).flush(null, {
+    http.expectOne({ method: 'PUT', url: 'http://localhost:8000/api/saved-dishes/1' }).flush(null, {
       status: 204,
       statusText: 'No Content',
     });

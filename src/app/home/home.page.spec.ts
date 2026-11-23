@@ -14,7 +14,7 @@ describe('HomePage', () => {
     fixture.detectChanges();
 
     const http = TestBed.inject(HttpTestingController);
-    http.expectOne('/api/dish-categories').flush([
+    http.expectOne('http://localhost:8000/api/dish-categories').flush([
       { id: 1, name: 'Main Dish', image: 'assets/categories/custom-main-dish.webp' },
       { id: 2, name: 'Soup', image: 'assets/categories/soup.webp' },
       { id: 7, name: 'Sides', image: null },

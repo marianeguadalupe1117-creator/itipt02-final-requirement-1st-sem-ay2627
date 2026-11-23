@@ -32,7 +32,7 @@ describe('PlanPage', () => {
     plan.month.set(tomorrow);
     fixture.detectChanges();
     const http = TestBed.inject(HttpTestingController);
-    http.expectOne('/api/dish-categories').flush([
+    http.expectOne('http://localhost:8000/api/dish-categories').flush([
       { id: 1, name: 'Main Dish' },
       { id: 2, name: 'Soup' },
     ]);
@@ -46,7 +46,7 @@ describe('PlanPage', () => {
 
     const category = page.querySelectorAll('ion-select')[0];
     category.dispatchEvent(new CustomEvent('ionChange', { detail: { value: '1' } }));
-    http.expectOne('/api/dish-categories/1/dishes').flush({
+    http.expectOne('http://localhost:8000/api/dish-categories/1/dishes').flush({
       dishes: [{ id: 10, name: 'Chicken Adobo' }],
     });
     fixture.detectChanges();
@@ -66,14 +66,14 @@ describe('PlanPage', () => {
     category.dispatchEvent(new CustomEvent('ionChange', { detail: { value: '2' } }));
     fixture.detectChanges();
     expect(dish.disabled).toBe(true);
-    http.expectOne('/api/dish-categories/2/dishes').flush({
+    http.expectOne('http://localhost:8000/api/dish-categories/2/dishes').flush({
       dishes: [{ id: 20, name: 'Tinola' }],
     });
     fixture.detectChanges();
     expect(Array.from(dish.querySelectorAll('ion-select-option'), (option) => option.value)).toEqual(['20']);
 
     page.querySelector<HTMLElement>('ion-button[aria-label="Edit Chicken Adobo"]')?.click();
-    http.expectOne('/api/dish-categories/1/dishes').flush({
+    http.expectOne('http://localhost:8000/api/dish-categories/1/dishes').flush({
       dishes: [
         { id: 10, name: 'Chicken Adobo' },
         { id: 11, name: 'Pork Adobo' },
@@ -112,7 +112,7 @@ describe('PlanPage', () => {
     const yesterday = new Date(today.getFullYear(), today.getMonth(), today.getDate() - 1);
     plan.month.set(yesterday);
     fixture.detectChanges();
-    TestBed.inject(HttpTestingController).expectOne('/api/dish-categories').flush([]);
+    TestBed.inject(HttpTestingController).expectOne('http://localhost:8000/api/dish-categories').flush([]);
 
     const page: HTMLElement = fixture.nativeElement;
     const day = page.querySelector<HTMLButtonElement>(`.calendar-day[aria-label="${yesterday.toDateString()}"]`);

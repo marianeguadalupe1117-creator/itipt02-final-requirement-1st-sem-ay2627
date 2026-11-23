@@ -108,7 +108,7 @@
           @if (photoPreview(); as preview) {
           <ion-img [src]="preview" alt="" />
           } @else if (editing(); as post) {
-          <ion-img [src]="'/api/posts/' + post.id + '/image?v=' + imageVersion()" alt="" />
+          <ion-img [src]="api.postImageUrl(post.id, imageVersion())" alt="" />
           } @else {
           <ion-icon name="camera-outline" aria-hidden="true"></ion-icon>
           }

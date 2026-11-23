@@ -1,4 +1,3 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, computed, effect, inject, input, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import {
@@ -15,6 +14,8 @@ import {
 } from '@ionic/angular';
 import { addIcons } from 'ionicons';
 import { arrowForwardOutline } from 'ionicons/icons';
+
+import { ApiService } from '../api.service';
 
 interface Dish {
   id: number;
@@ -45,7 +46,7 @@ interface CategoryDishes {
   ],
 })
 export class RecipesPage {
-  private http = inject(HttpClient);
+  private api = inject(ApiService);
 
   categoryId = input.required<string>();
   categoryName = signal('');
@@ -71,20 +72,18 @@ export class RecipesPage {
       this.loading.set(true);
       this.failed.set(false);
 
-      const request = this.http
-        .get<CategoryDishes>(`/api/dish-categories/${encodeURIComponent(categoryId)}/dishes`)
-        .subscribe({
-          next: (data) => {
-            this.categoryName.set(data.category.name);
-            this.categoryImage.set(data.category.image);
-            this.dishes.set(data.dishes);
-            this.loading.set(false);
-          },
-          error: () => {
-            this.failed.set(true);
-            this.loading.set(false);
-          },
-        });
+      const request = this.api.getCategoryDishes<CategoryDishes>(categoryId).subscribe({
+        next: (data) => {
+          this.categoryName.set(data.category.name);
+          this.categoryImage.set(data.category.image);
+          this.dishes.set(data.dishes);
+          this.loading.set(false);
+        },
+        error: () => {
+          this.failed.set(true);
+          this.loading.set(false);
+        },
+      });
 
       onCleanup(() => request.unsubscribe());
     });

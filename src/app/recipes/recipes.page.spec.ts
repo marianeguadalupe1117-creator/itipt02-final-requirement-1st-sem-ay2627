@@ -15,7 +15,7 @@ describe('RecipesPage', () => {
 
     fixture.componentRef.setInput('categoryId', '1');
     fixture.detectChanges();
-    http.expectOne('/api/dish-categories/1/dishes').flush({
+    http.expectOne('http://localhost:8000/api/dish-categories/1/dishes').flush({
       category: { id: 1, name: 'Main Dish', image: 'assets/categories/main-dish.webp' },
       dishes: [{ id: 10, name: 'Chicken Adobo' }],
     });
@@ -28,7 +28,7 @@ describe('RecipesPage', () => {
 
     fixture.componentRef.setInput('categoryId', '6');
     fixture.detectChanges();
-    http.expectOne('/api/dish-categories/6/dishes').flush({
+    http.expectOne('http://localhost:8000/api/dish-categories/6/dishes').flush({
       category: { id: 6, name: 'Fried', image: null },
       dishes: [{ id: 11, name: 'Lechon Kawali' }],
     });

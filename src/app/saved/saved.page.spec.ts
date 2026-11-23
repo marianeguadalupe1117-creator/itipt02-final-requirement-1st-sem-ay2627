@@ -25,9 +25,11 @@ describe('SavedPage', () => {
     const http = TestBed.inject(HttpTestingController);
 
     fixture.componentInstance.ionViewWillEnter();
-    http.expectOne('/api/saved-dishes').flush([{ id: 1, name: 'Chicken Adobo', image_url: '/assets/adobo.jpg' }]);
     http
-      .expectOne('/api/posts?saved=true')
+      .expectOne('http://localhost:8000/api/saved-dishes')
+      .flush([{ id: 1, name: 'Chicken Adobo', image_url: '/assets/adobo.jpg' }]);
+    http
+      .expectOne('http://localhost:8000/api/posts?saved=true')
       .flush([{ id: 9, author_id: 3, dish_name: 'Pancit', recipe: 'Cook the noodles.', author: 'Mara', saved: true }]);
     fixture.detectChanges();
 
@@ -49,8 +51,11 @@ describe('SavedPage', () => {
         { text: 'Cancel', role: 'cancel' },
       ],
     });
-    const removal = await vi.waitFor(() => http.expectOne({ method: 'DELETE', url: '/api/posts/9/save' }));
+    const removal = await vi.waitFor(() =>
+      http.expectOne({ method: 'DELETE', url: 'http://localhost:8000/api/posts/9/save' }),
+    );
     expect(fixture.componentInstance.showRemovedToast()).toBe(false);
+    expect(removal.request.withCredentials).toBe(true);
     removal.flush(null, { status: 204, statusText: 'No Content' });
     await fixture.whenStable();
     fixture.detectChanges();
@@ -58,8 +63,8 @@ describe('SavedPage', () => {
     expect(fixture.componentInstance.showRemovedToast()).toBe(true);
 
     fixture.componentInstance.ionViewWillEnter();
-    http.expectOne('/api/saved-dishes').flush([]);
-    http.expectOne('/api/posts?saved=true').flush([]);
+    http.expectOne('http://localhost:8000/api/saved-dishes').flush([]);
+    http.expectOne('http://localhost:8000/api/posts?saved=true').flush([]);
     fixture.detectChanges();
     expect(page.textContent).toContain('No saved dishes yet.');
     http.verify();

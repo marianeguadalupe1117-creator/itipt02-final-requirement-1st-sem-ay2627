@@ -1,32 +1,19 @@
-import { HttpClient } from '@angular/common/http';
 import { inject, Injectable, signal } from '@angular/core';
 import type { CanActivateChildFn } from '@angular/router';
 import { Router } from '@angular/router';
 import { firstValueFrom } from 'rxjs';
 
-interface User {
-  id: number;
-  name: string;
-}
-
-interface LoginDetails {
-  email: string;
-  password: string;
-}
-
-interface RegistrationDetails extends LoginDetails {
-  name: string;
-  confirm_password: string;
-}
+import type { LoginDetails, RegistrationDetails, User } from '../api.service';
+import { ApiService } from '../api.service';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-  private http = inject(HttpClient);
+  private readonly api = inject(ApiService);
   user = signal<User | null>(null);
 
   async checkSession(): Promise<boolean> {
     try {
-      const user = await firstValueFrom(this.http.get<User>('/api/auth/me'));
+      const user = await firstValueFrom(this.api.getSession());
       this.user.set(user);
       return true;
     } catch {
@@ -36,16 +23,16 @@ export class AuthService {
   }
 
   async login(details: LoginDetails): Promise<void> {
-    const user = await firstValueFrom(this.http.post<User>('/api/auth/login', details));
+    const user = await firstValueFrom(this.api.login(details));
     this.user.set(user);
   }
 
   async register(details: RegistrationDetails): Promise<void> {
-    await firstValueFrom(this.http.post<User>('/api/auth/register', details));
+    await firstValueFrom(this.api.register(details));
   }
 
   async logout(): Promise<void> {
-    await firstValueFrom(this.http.post('/api/auth/logout', null));
+    await firstValueFrom(this.api.logout());
     this.user.set(null);
   }
 }

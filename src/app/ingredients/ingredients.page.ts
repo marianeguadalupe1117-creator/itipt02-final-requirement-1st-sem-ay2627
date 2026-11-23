@@ -1,4 +1,3 @@
-import { HttpClient } from '@angular/common/http';
 import type { OnInit } from '@angular/core';
 import { Component, inject, signal } from '@angular/core';
 import {
@@ -14,6 +13,8 @@ import {
   IonTitle,
   IonToolbar,
 } from '@ionic/angular';
+
+import { ApiService } from '../api.service';
 
 interface Ingredient {
   id: number;
@@ -62,7 +63,7 @@ interface IngredientsResponse {
   ],
 })
 export class IngredientsPage implements OnInit {
-  private http = inject(HttpClient);
+  private api = inject(ApiService);
 
   categories = signal<IngredientCategory[]>([]);
   recipes = signal<RecipeIngredients[]>([]);
@@ -77,7 +78,7 @@ export class IngredientsPage implements OnInit {
     this.loading.set(true);
     this.failed.set(false);
 
-    this.http.get<IngredientsResponse>('/api/ingredients').subscribe({
+    this.api.getIngredients<IngredientsResponse>().subscribe({
       next: (data) => {
         this.categories.set(data.categories);
         this.recipes.set(data.recipes);

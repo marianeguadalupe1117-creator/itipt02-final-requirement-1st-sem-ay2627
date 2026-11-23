@@ -13,7 +13,7 @@ describe('IngredientsPage', () => {
     fixture.detectChanges();
 
     const http = TestBed.inject(HttpTestingController);
-    http.expectOne('/api/ingredients').flush({
+    http.expectOne('http://localhost:8000/api/ingredients').flush({
       categories: [{ id: 1, name: 'Poultry', ingredients: [{ id: 20, name: 'Chicken' }] }],
       recipes: [
         {

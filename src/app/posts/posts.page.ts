@@ -1,4 +1,4 @@
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpErrorResponse } from '@angular/common/http';
 import type { OnDestroy } from '@angular/core';
 import { Component, DOCUMENT, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -35,6 +35,7 @@ import {
 } from 'ionicons/icons';
 import { firstValueFrom } from 'rxjs';
 
+import { ApiService } from '../api.service';
 import { AuthService } from '../auth/auth.service';
 
 import { PostCardComponent } from './post-card.component';
@@ -68,7 +69,7 @@ import type { RecipePost } from './recipe-post';
   ],
 })
 export class PostsPage implements OnDestroy {
-  private http = inject(HttpClient);
+  readonly api = inject(ApiService);
   private actions = inject(ActionSheetController);
   private alerts = inject(AlertController);
   private document = inject(DOCUMENT);
@@ -118,7 +119,7 @@ export class PostsPage implements OnDestroy {
     this.loading.set(true);
     this.feedError.set(false);
     try {
-      this.posts = await firstValueFrom(this.http.get<RecipePost[]>('/api/posts'));
+      this.posts = await firstValueFrom(this.api.getPosts());
       this.showMatchingPosts();
     } catch {
       this.feedError.set(true);
@@ -181,17 +182,16 @@ export class PostsPage implements OnDestroy {
   }
 
   private async toggleSaved(post: RecipePost): Promise<void> {
-    const url = `/api/posts/${post.id}/save`;
     this.notice.set('');
     this.actionError.set('');
     this.updatingPost.set(true);
     try {
       if (post.saved) {
-        await firstValueFrom(this.http.delete(url));
+        await firstValueFrom(this.api.removeSavedPost(post.id));
         post.saved = false;
         this.showRemovedToast.set(true);
       } else {
-        await firstValueFrom(this.http.put(url, null));
+        await firstValueFrom(this.api.savePost(post.id));
         post.saved = true;
         this.showSavedToast.set(true);
       }
@@ -219,7 +219,7 @@ export class PostsPage implements OnDestroy {
     this.actionError.set('');
     this.updatingPost.set(true);
     try {
-      await firstValueFrom(this.http.delete(`/api/posts/${post.id}`));
+      await firstValueFrom(this.api.deletePost(post.id));
       this.posts = this.posts.filter((item) => item.id !== post.id);
       this.showMatchingPosts();
       this.notice.set('Post deleted.');
@@ -306,10 +306,10 @@ export class PostsPage implements OnDestroy {
     this.posting.set(true);
     try {
       if (editing) {
-        await firstValueFrom(this.http.put(`/api/posts/${editing.id}`, form));
+        await firstValueFrom(this.api.updatePost(editing.id, form));
         if (photo) this.imageVersion.set(this.imageVersion() + 1);
       } else {
-        await firstValueFrom(this.http.post('/api/posts', form));
+        await firstValueFrom(this.api.createPost(form));
       }
     } catch (error) {
       const detail = error instanceof HttpErrorResponse ? error.error?.detail : undefined;

@@ -1,4 +1,3 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, inject, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import {
@@ -21,6 +20,7 @@ import { addIcons } from 'ionicons';
 import { ellipsisHorizontal } from 'ionicons/icons';
 import { firstValueFrom } from 'rxjs';
 
+import { ApiService } from '../api.service';
 import { AuthService } from '../auth/auth.service';
 import { PostCardComponent } from '../posts/post-card.component';
 import type { RecipePost } from '../posts/recipe-post';
@@ -54,7 +54,7 @@ interface SavedDish {
   ],
 })
 export class SavedPage {
-  private http = inject(HttpClient);
+  private api = inject(ApiService);
   private actions = inject(ActionSheetController);
   user = inject(AuthService).user;
 
@@ -79,7 +79,7 @@ export class SavedPage {
     this.postsFailed.set(false);
     this.removeFailed.set(false);
 
-    this.http.get<SavedDish[]>('/api/saved-dishes').subscribe({
+    this.api.getSavedDishes<SavedDish>().subscribe({
       next: (dishes) => {
         this.dishes.set(dishes);
         this.loading.set(false);
@@ -90,7 +90,7 @@ export class SavedPage {
       },
     });
 
-    this.http.get<RecipePost[]>('/api/posts?saved=true').subscribe({
+    this.api.getSavedPosts().subscribe({
       next: (posts) => {
         this.posts.set(posts);
         this.postsLoading.set(false);
@@ -121,7 +121,7 @@ export class SavedPage {
     this.removingPost.set(true);
     this.removeFailed.set(false);
     try {
-      await firstValueFrom(this.http.delete(`/api/posts/${postId}/save`));
+      await firstValueFrom(this.api.removeSavedPost(postId));
       this.posts.update((posts) => posts.filter((post) => post.id !== postId));
       this.showRemovedToast.set(true);
     } catch {

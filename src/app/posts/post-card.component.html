@@ -15,7 +15,7 @@
       <ng-content />
     </ion-row>
     <ion-row class="recipe-cover">
-      <ion-img [src]="'/api/posts/' + recipePost.id + '/image?v=' + imageVersion()" alt="" />
+      <ion-img [src]="api.postImageUrl(recipePost.id, imageVersion())" alt="" />
       <ion-card-title class="dish-name" role="heading" aria-level="3">{{ recipePost.dish_name }}</ion-card-title>
     </ion-row>
     <ion-accordion-group class="post-text" [value]="recipeOpen() ? 'recipe' : null">

@@ -1,4 +1,4 @@
-import { Component, input } from '@angular/core';
+import { Component, inject, input } from '@angular/core';
 import {
   IonAccordion,
   IonAccordionGroup,
@@ -13,6 +13,8 @@ import {
 } from '@ionic/angular';
 import { addIcons } from 'ionicons';
 import { personOutline } from 'ionicons/icons';
+
+import { ApiService } from '../api.service';
 
 import type { RecipePost } from './recipe-post';
 
@@ -34,6 +36,7 @@ import type { RecipePost } from './recipe-post';
   ],
 })
 export class PostCardComponent {
+  readonly api = inject(ApiService);
   post = input.required<RecipePost>();
   ownPost = input(false);
   ownPostOnLeft = input(false);

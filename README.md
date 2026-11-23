@@ -11,4 +11,4 @@ py -3.12 -m venv .venv
 .\.venv\Scripts\python.exe -m uvicorn main:app --port 8000
 ```
 
-From the repository root, run `npm ci` and then `npm start -- --port 8102` and open [Register](http://localhost:8102/register).
+From the `frontend` directory, run `npm ci` and then `npm start -- --port 8102` and open [Register](http://localhost:8102/register).

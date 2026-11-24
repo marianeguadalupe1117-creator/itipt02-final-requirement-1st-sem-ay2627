@@ -6,6 +6,8 @@ final requirement for itpt02, creating a Recipe Application using Ionic Framewor
 Start MySQL with the existing PrepMaster database. From the `backend` directory, create the Python environment, install the dependencies, and start the API.
 
 
+in powershell or cmd
+```powershell
 py -3.12 -m venv .venv
 .\.venv\Scripts\python.exe -m pip install -r requirements.txt
 .\.venv\Scripts\python.exe -m uvicorn main:app --port 8000
